@@ -80,5 +80,8 @@ class MediaController extends Controller
     public function destroy($id)
     {
         //
+        $media = Media::Find($id);
+        $media->delete();
+        return redirect()->back();
     }
 }

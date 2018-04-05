@@ -14,10 +14,10 @@ class Product extends Model
       return $this->belongsTo('App\Category','category_id');
     }
      public function user(){
-      return $this->belongsTo('App\User','user_id');
+      return $this->belongsTo('App\User');
     }
-     public function tag(){
-      return $this->belongsTo('App\Tag','tag_id');
+     public function tags(){
+      return $this->belongsToMany('App\Tag','product_tag','product_id','tag_id');
     }
      public function curr(){
       return $this->belongsTo('App\Curr','curr_id');

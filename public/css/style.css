@@ -1,292 +1,88 @@
-/*general*/
-   html, body {
-                background-color: #fff;
-                color: #000;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-@media print {
-#card{
-    background-color: #fff !important;
-    -webkit-print-color-adjust: exact; 
-}}
-
-section{
-   margin-top: 20px;
+/*Style products.show*/
+.proCont{
+    background:#f0f0f0;
+    margin: 0;
 }
-.addbtn{
-   margin-top: -35px;
+.proName{
+  color: #2980b9;
+  font-weight: bold;
 }
-.checkbox{
-   margin:5px;
-   font-size: 1.2em;
+.proInfo{
+  margin: 10px;
+  padding: 10px;
+  font-size: 1.15em;
 }
-.checkbox input{
+.proInfo span{
+  font-weight: 700;
 }
-/**/
-.elePost img {
-   width: 100%;
-   height: auto;
-
-}
-.elePost video{
-   width: 100%;
-   height: auto;
-}
-.elePost{
-   max-height: 400px;
-   overflow: hidden;
-}
-.newmediaCont{
-   background: #f3f3f3;
-}
-.postreview{
-
-}
-.btnaddpro{
-	margin:-7px;
-}
-/*Edit Post*/
-.elePostedit{
-	width: 100%;
-   height: 100%;
-}
-.elePostedit img {
-   width: 100%;
-   height: 100%;
-
-}
-.elePostedit video{
-   width: 100%;
-   height: auto;
-}
-.ImgCont{
-   background: #fff;
-}
-.FileBox{
-   position: relative;
-   overflow: hidden;
-}
-.FileBox:hover .backimg{
-  top: 0;
-}
-.backimg{
-   position: absolute;
-   width: 100%;
-   height: 100%;
-   top: -100%;
-   left: 0;
-   background: transparent;
-   transition: all .5s ease-in-out;
-}
-.backimg button{
-   margin:0 auto ;
-   margin-top: 15%;
-}
-
-.showMemberIcon{
-   border:1px dashed #000;
-   padding: 10px;
-   font-size: 20rem;
-   color: #0435f6;
-}
-/*member card*/
-.cardCont{
-   border-bottom: 2px dotted #000;
-}
-.memberPanel{
-       border: 2px dashed;
-}
-.memberCard .imgCont{
-   width: 45%;
-   display: inline-block;
-}
-.memberCard .imgCont img{
-   width: 75%;
-   height: auto;
-}
-.memberCard .textCont{
-   display: inline-block;
-}
-.memberImgCont{
-   width: 30%;
-   display: inline-block;;
-}
-.memberImgCont img{
-   width: auto;
-    height: 127px;
-}
-.basicInfo{
-  display: inline-block; 
-}
-.basicInfo .name{
-   font-size: 30px;
-    font-family: serif;
-    font-weight: bold;
-}
-.basicInfo .type{
-   font-size: 20px;
-    color: #f10a0a;
-    font-family: serif;
-}
-.basicInfo.branch{
-   font-size: 20px;
-    color: #3189c3;
-    font-family: serif;
-}
-.telCont{
-   display: inline-block;
-}
-.telCont i{
-   font-size: 30px;
-    color: #4dc346;
-}
-.mailCont i{
-   font-size: 25px;
-    color: #3189c3;
-
-}
-.mailCont p{
-   display: inline-block;
-}
-.valid{
-   display: inline-block;
-   float: right;
-}
-
-.barcodeCont{
-   text-align: center;
-   margin: 0;
-}
-.bar{
-   border:1px dotted #333;
-}
-.fullInfo .imgCont{
-width: 200px;
-height: 100px;
-display: inline-block;
-}
-.fullInfo .imgCont img{
-width: 100%;
-height: auto;
-}
-.fullInfo .memberImgCont img{
-  width: 100%;
-height: auto;
-}
-.fullInfo .textCont{
-display: inline-block;
-float: right;
-}
-.fullInfo span{
-  font-size: 1.1em;
-  color: #EE7469;
-}
-.sign{
-  width: 200px;
-  float: right;
-}
-.Signatureline{
-  height: 50px;
-  border-bottom: 1px dotted #EE7469;
-}
-/*end member card*/
-/*navbar*/
-.gradientNav{
-  background: linear-gradient(to right, white , #d9edf7);
-}
-.navbar-nav i{
-font-size: 20px;
-}
-.fa-rocket{
-    color: #dd4b39;
-}
-.fa-leaf{
-    color: #34a853;
-}
-.fa-spinner{
-    color: #dd4b39;
-}
-.fa-info-circle{
-    color: #1da1f2;
-}
-/**End NavBar*/
-/*Footer*/
-.Footer{
-   background: linear-gradient(to right, white , #d9edf7);
-}
-.Footer .EmailCont{
-  color: #2c3e50;
-  font-size: 1.25em;
+.price{
   font-style: italic;
+}
+.price span{
+  font-size: 1.4em;
+  font-style: normal;
+  font-weight: bold;
+  color: #e74c3c;
+}
+/*products edit style*/
+.imgCont{
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+}
+.imgCont img {
+  width: 100%;
+  height: auto;
+}
+/*image gallery*/
+div.gallery {
+    border: 1px solid #ccc;
+}
 
-}
-.Footer .fa-phone-square{
-  color: #34a853;
-
-}
-.Footer .fa-envelope{
-  color: #ffa930;
-
+div.gallery:hover {
+    border: 1px solid #777;
 }
 
-.Footer .social i{
-  font-size: 1.5em;
+div.gallery img {
+    width: 100%;
+    height: auto;
 }
-.Footer .social img{
-  width: 23px;
-    margin-top: -10px;
+
+div.desc {
+    padding: 15px;
+    text-align: center;
+   overflow: hidden;
 }
-.fa-facebook-square{
-color: #3b5998;
+
+* {
+    box-sizing: border-box;
 }
-.fa-twitter-square{
-  color: #1da1f2;
+
+.responsive {
+    padding: 0 6px;
+    float: left;
+    width: 24.99999%;
+    overflow: hidden;
 }
-.fa-google-plus-square{
-  color: #dd4b39;
+.responsive:hover .desc button{
+  opacity: 1; 
 }
+@media only screen and (max-width: 700px) {
+    .responsive {
+        width: 49.99999%;
+        margin: 6px 0;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .responsive {
+        width: 100%;
+    }
+}
+
+.clearfix:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+/*end image gallery*/

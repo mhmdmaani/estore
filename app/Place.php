@@ -8,6 +8,6 @@ class Place extends Model
 {
     //
      public function products(){
-      return $this->hasMany('App\Product','place_id');
+      return $this->hasMany('App\Product');
     }
 }

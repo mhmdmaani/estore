@@ -1,14 +1,5 @@
 $('document').ready(function(){
-/*initial BarCode Library*/
-JsBarcode(".barcode").init();
-var memberID = $('#barcode').text();
-JsBarcode("#barcodeimg",memberID,{
-  width: 4,
-} );
-
-$("#print").click(function(){
-     $("#card").print();
-});
+$('.carousel').carousel();
 
 /*Dealing with images */
  $('#postimg').click(function()
@@ -17,11 +8,17 @@ $("#print").click(function(){
         $img.setAttribute('type', 'file');
         $img.setAttribute('name','imgFiles[]');
         $img.setAttribute('accept','image/*');
-        $img.setAttribute('class','imgfiles');
+        $img.setAttribute('class','imgfiles hidden');
+        $div = document.createElement("div");
+        $contdiv = document.createElement("div");
+        $contdiv.setAttribute('class','responsive');
+        $div.setAttribute('class','gallery');
         $img.addEventListener("change",function(){
-        readURLImage(this ,$('#postreview')); 
+        readURLImage(this ,$div); 
         });
-        $('#paths').append($img);
+          $div.append($img);
+          $contdiv.append($div);
+          $('#postreview').append($contdiv);
         $('.imgfiles').last().trigger('click');
         
 
@@ -44,7 +41,7 @@ $("#print").click(function(){
     });
  /*End dealing with videos*/
 
-
+/*deleteimg*/
 
 
  /*helper functions*/
@@ -57,11 +54,18 @@ $("#print").click(function(){
           $img =document.createElement("img");
           $img.setAttribute('name','images[]');
           $img.setAttribute('src', e.target.result);
-          $div = document.createElement("div");
-          $div.setAttribute('class','col col-md-4 col-lg-4 col-sm-6 col-xs-6 elePost');
-          $div.append($img);
-          $container.append($div);
-          $container.css('display','inline-block');
+          $container.append($img);
+            $desc = document.createElement("div");
+        $desc.setAttribute('class','desc');
+        $deletebtn = document.createElement("button");
+        $deletebtn.setAttribute('class','btn btn-danger btn-xs delimg');
+        $deletebtn.setAttribute('type','button');
+        $deletebtn.addEventListener('click',function () {
+          $(this).parent().parent().parent().remove();
+        });
+        $deletebtn.innerHTML='delete';
+        $desc.append($deletebtn);
+        $container.append($desc);
         };
         reader.readAsDataURL(input.files[0]);
     }
@@ -90,27 +94,4 @@ $("#print").click(function(){
     }  
   };
   /**End Function**/
-  /*Display image when hovered*/
-  $('.FileBox').hover(function (){
-   $this.children('.backimg').FadeIn();
-   console.log("over");
-  });
-  /*Branch */
-  $('#logoPathTrigger').click(function(){
-   $('#logoPathInput').trigger('click');
-  });
-
-  $('#logoPathInput').change(function(){
-  if ($('#logoReview').has($('img'))){
-    $('#logoReview').empty();
-  }
-  readURLImage(this,$('#logoReview'));
-  
-  });
-  /*activity times */
-  $('#dayCont').children('button').click(function(e){
-    e.preventDefault();
-   var txt =$(this).text();
-   $("#daytxt").val( txt );
-  });
 });

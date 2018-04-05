@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Category;
+use App\curr;
 
-class CategoriesController extends Controller
+class CurrsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,8 @@ class CategoriesController extends Controller
     public function index()
     {
         //
-           $categories = Category::All();
-        return view("categories.index",['categories'=>$categories]);
+           $currs = Curr::All();
+        return view("currs.index",['currs'=>$currs]);
     }
 
     /**
@@ -27,7 +27,7 @@ class CategoriesController extends Controller
     public function create()
     {
         //
-          return view("categories.create");
+          return view("currs.create");
     }
 
     /**
@@ -39,14 +39,14 @@ class CategoriesController extends Controller
     public function store(Request $request)
     {
         //
-         $Category         = new Category();
-         $Category->name   = $request->input('name');
-           $save       = $Category->save();
+         $curr         = new Curr();
+         $curr->name   = $request->input('name');
+           $save       = $curr->save();
         if($save)
         {
-               return redirect()->route('categories.create')->with('success','Category is added successfully!!!');
+               return redirect()->route('currs.create')->with('success','curr is added successfully!!!');
         }
-            return redirect()->route('categories.create')->with('errors','Category is not added because of errors!!!');
+            return redirect()->route('currs.create')->with('errors','curr is not added because of errors!!!');
     }
 
     /**
@@ -58,9 +58,9 @@ class CategoriesController extends Controller
     public function show($id)
     {
         //
-             $Category = Category::find($id);
+             $curr = curr::find($id);
         //$posts = $pro->posts()->orderBy('created_at','desc')->paginate(10);
-           return view('categories.show',['Category'=>$Category]);
+           return view('currs.show',['curr'=>$curr]);
     }
 
     /**
@@ -69,12 +69,12 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $Category)
+    public function edit(curr $curr)
     {
         //
-            $id = $Category->id;
-             $selected = Category::Find($id);
-        return view('categories.edit',['Category'=>$selected]);
+            $id = $curr->id;
+             $selected = Curr::Find($id);
+        return view('currs.edit',['curr'=>$selected]);
     }
 
     /**
@@ -87,13 +87,13 @@ class CategoriesController extends Controller
     public function update(Request $request, $id)
     {
         //
-          $Category              = Category::Find($request->input('id'));
-        $Category->name          = $request->input('name');
-            $save = $Category->save();
+          $curr              = Curr::Find($request->input('id'));
+        $curr->name          = $request->input('name');
+            $save = $curr->save();
             if($save){
-                return redirect()->route('categories.index')->with('success','Category is added successfully!!!'); 
+                return redirect()->route('currs.index')->with('success','curr is added successfully!!!'); 
             }
-             return redirect()->route('categories.index')->with('errors','Category  didnt updated!!!'); 
+             return redirect()->route('currs.index')->with('errors','curr  didnt updated!!!'); 
     }
 
     /**
@@ -102,11 +102,11 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $Category)
+    public function destroy(curr $curr)
     {
         //
          
-           $Category->Delete();
-              return redirect()->route('categories.index')->with('success','Category is removed successfully!!!'); 
+           $curr->Delete();
+              return redirect()->route('currs.index')->with('success','curr is removed successfully!!!'); 
     }
 }

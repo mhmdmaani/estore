@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Category;
+use App\Place;
 
-class CategoriesController extends Controller
+class PlacesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,8 @@ class CategoriesController extends Controller
     public function index()
     {
         //
-           $categories = Category::All();
-        return view("categories.index",['categories'=>$categories]);
+           $places = Place::All();
+        return view("places.index",['places'=>$places]);
     }
 
     /**
@@ -27,7 +27,7 @@ class CategoriesController extends Controller
     public function create()
     {
         //
-          return view("categories.create");
+          return view("places.create");
     }
 
     /**
@@ -39,14 +39,14 @@ class CategoriesController extends Controller
     public function store(Request $request)
     {
         //
-         $Category         = new Category();
-         $Category->name   = $request->input('name');
-           $save       = $Category->save();
+         $place         = new Place();
+         $place->name   = $request->input('name');
+           $save       = $place->save();
         if($save)
         {
-               return redirect()->route('categories.create')->with('success','Category is added successfully!!!');
+               return redirect()->route('places.create')->with('success','Place is added successfully!!!');
         }
-            return redirect()->route('categories.create')->with('errors','Category is not added because of errors!!!');
+            return redirect()->route('places.create')->with('errors','Place is not added because of errors!!!');
     }
 
     /**
@@ -58,9 +58,9 @@ class CategoriesController extends Controller
     public function show($id)
     {
         //
-             $Category = Category::find($id);
+             $place = Place::find($id);
         //$posts = $pro->posts()->orderBy('created_at','desc')->paginate(10);
-           return view('categories.show',['Category'=>$Category]);
+           return view('places.show',['place'=>$place]);
     }
 
     /**
@@ -69,12 +69,12 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $Category)
+    public function edit(Place $place)
     {
         //
-            $id = $Category->id;
-             $selected = Category::Find($id);
-        return view('categories.edit',['Category'=>$selected]);
+            $id = $place->id;
+             $selected = Place::Find($id);
+        return view('places.edit',['Place'=>$selected]);
     }
 
     /**
@@ -87,13 +87,13 @@ class CategoriesController extends Controller
     public function update(Request $request, $id)
     {
         //
-          $Category              = Category::Find($request->input('id'));
-        $Category->name          = $request->input('name');
-            $save = $Category->save();
+          $place              = Place::Find($request->input('id'));
+        $place->name          = $request->input('name');
+            $save = $place->save();
             if($save){
-                return redirect()->route('categories.index')->with('success','Category is added successfully!!!'); 
+                return redirect()->route('places.index')->with('success','Place is added successfully!!!'); 
             }
-             return redirect()->route('categories.index')->with('errors','Category  didnt updated!!!'); 
+             return redirect()->route('places.index')->with('errors','Place  didnt updated!!!'); 
     }
 
     /**
@@ -102,11 +102,10 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $Category)
+    public function destroy(Place $place)
     {
-        //
-         
-           $Category->Delete();
-              return redirect()->route('categories.index')->with('success','Category is removed successfully!!!'); 
+        //   
+           $place->Delete();
+              return redirect()->route('places.index')->with('success','Place is removed successfully!!!'); 
     }
 }

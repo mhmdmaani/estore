@@ -14,6 +14,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/font-awesome.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap-tagsinput.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -40,16 +41,15 @@
                     <ul class="nav navbar-nav">
                         &nbsp;
                     </ul>
-
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
                         @guest
-                            <li><a href="{{ route('login') }}">Login</a></li>
-                            <li><a href="{{ route('register') }}">Register</a></li>
+                            <li class="nav-item"><a href="{{ route('login') }}">Login</a></li>
+                            <li class="nav-item" ><a class="nav-link" href="{{ route('register') }}">Register</a></li>
                         @else
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
+                            <li class="dropdown" class="nav-item">
+                                <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
@@ -72,13 +72,17 @@
                 </div>
             </div>
         </nav>
-
+         @include('partials.errors')
+         @include('partials.success')
         @yield('content')
-    </div>
+</div>
+</div>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="{{ asset('js/bootstrap-tagsinput.js')}}"></script>
     <script src="{{ asset('js/plugin.js') }}"></script>
 </body>
 </html>

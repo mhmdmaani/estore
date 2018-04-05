@@ -18,5 +18,12 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/products','ProductsController@index');
-Route::get('/products.create','ProductsController@create');
+Route::resource('/products','ProductsController');
+Route::resource('/currs','CurrsController');
+Route::resource('/categories','CategoriesController');
+Route::resource('/places','PlacesController');
+Route::resource('/media','MediaController');
+Route::post('/products/searchbyid','ProductsController@searchbyid')->middleware(auth::class); 
+Route::post('/products/searchbyname','ProductsController@searchbyname')->middleware(auth::class); 
+Route::post('/products/xsearch','ProductsController@xsearch')->middleware(auth::class); 
+
