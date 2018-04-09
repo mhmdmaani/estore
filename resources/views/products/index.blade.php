@@ -111,7 +111,7 @@
                                          <a href="/product/{{$product->id}}/approve">
                                                 <button class="btn btn-success">Approve</button>
                                          </a> 
-                                     
+                                      
                                      @endif                                   
                                              <button class="btn btn-danger" onclick="
                                              var result = confirm('Do you sure to delete this project??');

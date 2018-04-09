@@ -94,14 +94,37 @@ $('.carousel').carousel();
     }  
   };
   /**End Function**/
-     function getMessage(proID){
-            $.ajax({
-               type:'POST',
-               url:'/getmsg',
-               data:'_token = <?php echo csrf_token() ?>',
-               success:function(data){
-                  $("#msg").html(data.msg);
-               }
-            });
-         }
+   /*ajax */
+   var formData = new FormData();
+formData.append('name', name.val());
+formData.append('link', link.val());
+formData.append('image', image[0].-files[0]); 
+
+$.ajax({
+url: form.attr('action'),
+method: 'post',
+dataType: 'json',
+contentType: false,
+processData: false,
+
+headers: {
+    'X-CSRF-TOKEN': token.val()
+},
+
+data: formData,
+
+error: function (data) {
+
+    if (data.status === 422) {
+
+         name_error.html(data.responseJSON.name);
+         link_error.html(data.responseJSON.link);
+         image_error.html(data.responseJSON.image);
+
+    } else {
+
+         alert('success');
+    }
+}
+</script>
 });
