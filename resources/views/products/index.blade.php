@@ -82,11 +82,11 @@
                                     <tbody>
                                     @foreach($products as $product)
                                        @if($product->is_sold==1)
-                                       {
+                                       
                                         <tr class="danger">
-                                         }else{
+                                         @else
                                             <tr class="success">
-                                                }
+            
                                        @endif
                                             <td>{{$product->id}}</td>
                                             <td>{{$product->name}}</td>
@@ -96,45 +96,43 @@
                                             <td>{{$product->category->name}}</td>
                                             <td>{{$product->created_at}}</td>
                                             <td>
-                                               <img src="/storage/images/{{$product->Path}}" class="img-responsive img-thumbniel pull-right">
-                                            </td>
-                                            <td>
                                               <a href="/products/{{$product->id}}">
                                                 <button class="btn btn-secondary">Show</button>
                                              </a>
-                                             <a href="products/{{$product->id}}/edit">
+                                             <a href="/products/{{$product->id}}/edit">
                                                 <button class="btn btn-success">Edit</button>
                                              </a> 
-                                   @if($product->is_active==1){
-                                             <a href="products/{{$product->id}}/disapprove">
+                                   @if($product->is_active==1)
+                                             <a href="/product/{{$product->id}}/disapprove">
                                                 <button class="btn btn-success">Disapprove</button>
                                              </a> 
-                                         }else{
-                                         <a href="products/{{$product->id}}/approve">
+                                         
+                                         @else
+                                         <a href="/product/{{$product->id}}/approve">
                                                 <button class="btn btn-success">Approve</button>
-                                             </a> 
-                                     }  
+                                         </a> 
+                                     
                                      @endif                                   
                                              <button class="btn btn-danger" onclick="
                                              var result = confirm('Do you sure to delete this project??');
                                              if(result){
-                                                 document.getElementById('deleteForm').submit();
+                                                 document.getElementById('delete{{$product->id}}').submit();
                                              }
                                                       
                                              " >Delete</button> 
-                                          <form method="POST" id="deleteForm" action="{{ route('products.destroy',[$product->id]) }}">
+                                          <form method="POST" id="delete{{$product->id}}" action="{{ route('products.destroy',[$product->id]) }}">
                                                     <input type=hidden name="_method" value="delete">
                                                     {!!csrf_field()!!}
                                          </form>
                                             </td>
-                                        </tr>
-                                       
+                                        </tr>                                       
                                         @endforeach
                                     </tbody>
                                 </table>
                             </div>
                             <!-- /.table-responsive -->
                         </div>
+
                         </div>
                         <div class="panel-footer">
                         </div>

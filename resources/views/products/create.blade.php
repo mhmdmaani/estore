@@ -54,9 +54,9 @@
             <div class="bs-example">
             <input name="tags" type="text" data-role="tagsinput" value="" />
             </div> 
-             <div class="hidden" id="paths" >
-                <!--hidden files-->
-             </div>
+          <div class="form-group" id="postreview">
+              <!--paths-->
+          </div>
             <input type="submit" name="Add" class="btn btn-success" value="Add New Product">
     </form>
     <div class="section newmediaCont">

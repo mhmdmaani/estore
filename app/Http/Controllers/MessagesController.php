@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Media;
-use Illuminate\Support\Facades\Storage;
-class MediaController extends Controller
+
+class MessagesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -81,9 +80,5 @@ class MediaController extends Controller
     public function destroy($id)
     {
         //
-        $media = Media::Find($id);
-        Storage::delete($media->path);
-        $media->delete();
-        return redirect()->back();
     }
 }
