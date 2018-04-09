@@ -95,11 +95,11 @@ $('.carousel').carousel();
   };
   /**End Function**/
    /*ajax */
-   var formData = new FormData();
-formData.append('name', name.val());
-formData.append('link', link.val());
-formData.append('image', image[0].-files[0]); 
 
+  $('#sendSmsBtn').click(function(){
+
+ var formData = new FormData('#sendSmsForm');
+ var form = $('#sendSmsForm');
 $.ajax({
 url: form.attr('action'),
 method: 'post',
@@ -126,5 +126,6 @@ error: function (data) {
          alert('success');
     }
 }
-</script>
+
+  });
 });

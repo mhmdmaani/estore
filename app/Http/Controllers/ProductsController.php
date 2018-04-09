@@ -60,8 +60,8 @@ class ProductsController extends Controller
         $currency       = $request->input('currency');
         $place          = $request->input('local');
         $tags           = $request->input('tags');
-        $category           = $request->input('category');
-         $images              =$request->file('imgFiles');
+        $category       = $request->input('category');
+         $images        =$request->file('imgFiles');
         $user           =Auth::user();
         if(!empty($name) && !empty($price)){
         $product        = new Product();

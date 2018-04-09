@@ -28,4 +28,4 @@ Route::post('/products/searchbyname','ProductsController@searchbyname')->middlew
 Route::post('/products/xsearch','ProductsController@xsearch')->middleware(auth::class); 
 Route::get('/product/{id}/disapprove','ProductsController@disapprove');
 Route::get('/product/{id}/approve','ProductsController@approve');
-
+Route::post('/sendSms','MessagesController@sendSms');

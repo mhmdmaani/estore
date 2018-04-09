@@ -82,11 +82,13 @@
         <!--End loop messages-->
       </div>
       <div class="sendCont">
-        <form>
-          <textarea resizable="false">
+        <form id="sendSmsForm" action="/sendSms" method="post">
+            {{csrf_field()}}
+            <input type="hidden" name="productID" value="{{$product->id}}">
+          <textarea resizable="false" name="smsBody">
             
           </textarea>
-          <button class="btn btn-primary btn-xs">
+          <button class="btn btn-primary btn-xs" id="sendSmsBtn"> 
             <i class="fa fa-paper-plane"></i>
           </button>
         </form>
