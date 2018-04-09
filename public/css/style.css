@@ -24,6 +24,58 @@
   font-weight: bold;
   color: #e74c3c;
 }
+/***style products.show messages**/
+.messageCont{
+  border-radius: 15px 15px 0 0;
+  overflow: hidden;
+  border:1px solid #444;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  width: 300px;
+}
+.messageHeader{
+  background:#0984e3;
+  color:#fff;
+  padding: 5px;
+}
+.messageBody{
+  background:#fff;
+  color:#333;
+  padding: 5px;
+}
+.sendCont textarea{
+  width: 89%;
+  height: 30px;
+  resize: none;
+}
+.sendCont button{
+  border-radius: 0;
+height: 29px;
+margin-top: -23px;
+}
+.sendCont  i{
+  font-size: 1em;
+  color:fff;
+}
+.reciversms{
+  margin:5px;
+  background:#f0f0f0;
+  color:#333;
+  padding: 5px;
+ overflow-wrap: break-word;
+}
+.sendersms{
+  margin:5px;
+  background:#0984e3;
+  color:#fff;
+  padding: 5px;
+ overflow-wrap: break-word;
+}
+/*products index style*/
+.btnaddpro{
+  margin-top: -7px;
+}
 /*products edit style*/
 .imgCont{
   width: 150px;

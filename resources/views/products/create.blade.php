@@ -58,6 +58,9 @@
                   <!--here will place new images and thire paths-->
               </div>
 
+          <div class="form-group" id="postreview">
+              <!--paths-->
+          </div>
             <input type="submit" name="Add" class="btn btn-success" value="Add New Product">
     </form>
     <div class="section newmediaCont">

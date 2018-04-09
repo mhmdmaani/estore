@@ -26,4 +26,6 @@ Route::resource('/media','MediaController');
 Route::post('/products/searchbyid','ProductsController@searchbyid')->middleware(auth::class); 
 Route::post('/products/searchbyname','ProductsController@searchbyname')->middleware(auth::class); 
 Route::post('/products/xsearch','ProductsController@xsearch')->middleware(auth::class); 
+Route::get('/product/{id}/disapprove','ProductsController@disapprove');
+Route::get('/product/{id}/approve','ProductsController@approve');
 

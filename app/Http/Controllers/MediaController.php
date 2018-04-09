@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Media;
+use Illuminate\Support\Facades\Storage;
 class MediaController extends Controller
 {
     /**
@@ -81,6 +82,7 @@ class MediaController extends Controller
     {
         //
         $media = Media::Find($id);
+        Storage::delete($media->path);
         $media->delete();
         return redirect()->back();
     }

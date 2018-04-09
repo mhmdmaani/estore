@@ -9,7 +9,7 @@
   
       <div class="panel-body">
       <form method="post" action="{{route('products.update',[$product->id])}}" class="form"
-      enctype="multipart/form-data">
+      enctype="multipart/form-data" id="editform">
         {{csrf_field()}}
         <input type="hidden" name="_method" value="put">
         <input type="hidden" name="id" value="{{$product->id}}">
@@ -80,14 +80,10 @@
                         <button class="btn btn-danger btn-xs" type="button" onclick="
                                              var result = confirm('Do you sure to delete saved image??');
                                              if(result){
-                                                 document.getElementById('deleteForm').submit();
+                                                 document.getElementById('{{$img->id}}').submit();
                                              }
                                                       
                                              " >Delete</button> 
-                          <form method="POST" id="deleteForm" action="{{ route('media.destroy',[$img->id]) }}">
-                                    <input type=hidden name="_method" value="delete">
-                                    {!!csrf_field()!!}
-                         </form>
                     </div>
             
               </div>
@@ -101,12 +97,20 @@
          </div>
                
         <div class="form-group">
-            <input type="submit" name="Add" class="btn btn-success form-control" value="update">
+            <input type="submit" name="Add" class="btn btn-success form-control" value="update" onclick="
+            document.getElementById('editform').submit();">
         </div>
-    </form>
+          </form>
+
     </div>
    
      </div>
  </div>
 </div>
+  @foreach($product->media()->get() as $img)
+    <form method="POST" id="{{$img->id}}" action="{{ route('media.destroy',[$img->id]) }}">
+                                    <input type=hidden name="_method" value="delete">
+                                    {!!csrf_field()!!}
+                         </form>
+  @endforeach
 @endsection

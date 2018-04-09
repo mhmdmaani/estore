@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Product;
 use App\Tag;
 use App\Category;
@@ -141,6 +142,54 @@ class ProductsController extends Controller
     public function update(Request $request, $id)
     {
         //
+         $name                   = $request->input('name');
+        $description             = $request->input('descrption');
+        $price                   = $request->input('price');
+        $currency                = $request->input('currency');
+        $place                   = $request->input('local');
+        $tags                    = $request->input('tags');
+        $category                = $request->input('category');
+         $images              =$request->file('imgFiles');
+        $user           =Auth::user();
+        if(!empty($name) && !empty($price)){
+        $product                  =  Product::Find($id);
+        $product->name            = $name;
+        $product->description     =$description;
+        $product->price           = $price;
+        $product->category_id     = $category;
+        $product->curr_id         = $currency;
+        $product->place_id        = $place;
+        $product->user_id         = $user->id;
+        $product->save();
+        $product->tags()->delete();
+        }
+        foreach (explode(",", $tags) as $tg)
+        {
+          if(Tag::Where('name',$tg)->count()>0){
+              $tag = Tag::Where('name',$tg)->First(); 
+               $tag->products()->save($product); 
+            }else{
+            $tag = new Tag();
+            $tag->name = $tg;
+            $tag->save();
+             $tag->products()->save($product);
+            }  
+           $tag->save();
+        }
+        if(!empty($images)){
+     foreach ($images as $image => $value) {
+        $imgName          = md5(time().uniqid()).'.'.$value->getClientOriginalExtension();
+         $value->storeAs('public/images',$imgName);
+         $img             = new Media();
+         $img->path        = $imgName;
+         $img->product_id    = $product->id;
+         $img->save();
+         $product->media()->save($img);
+       }
+
+    }
+         return redirect()->action('ProductsController@index')
+         ->with('success','Product updated successfully');
     }
 
     /**
@@ -200,5 +249,17 @@ class ProductsController extends Controller
          $product->is_active = 1;
          $product->save();
             return back();
+    }
+    public function approve($id){
+      $product = Product::Find($id);
+      $product->is_active=1;
+      $product->save();
+      return redirect()->back();
+    }
+    public function disapprove($id){
+      $product = Product::Find($id);
+      $product->is_active=0;
+      $product->save();
+      return redirect()->back();
     }
 }

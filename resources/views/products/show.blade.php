@@ -63,7 +63,35 @@
       </div>
   </div>
   <div class="col col-md-6">
-
+    <button class="btn btn-primary">Message siller</button>
+    <button class="btn btn-secondary">Report this item</button>
+  </div>
+  <div class="messageCont">
+    <div class="messageHeader">
+       Seller Name
+    </div>
+    <div class="messageBody">
+      <div class="oldermessages">
+        <!--loop messages-->
+        <div class="reciversms">
+          <p>loriedsfsdfsdfdsfdsfdsfvxxcvcvfdfgdfgdfgdf dfggfdggdfdgfgfd dfdfgddfgddgdf</p>
+        </div>
+         <div class="sendersms">
+          <p>loriedsfsdfsdfdsfdsfdsfvxxcvcvfdfgdfgdfgdf dfggfdggdfdgfgfd dfdfgddfgddgdf</p>
+        </div>
+        <!--End loop messages-->
+      </div>
+      <div class="sendCont">
+        <form>
+          <textarea resizable="false">
+            
+          </textarea>
+          <button class="btn btn-primary btn-xs">
+            <i class="fa fa-paper-plane"></i>
+          </button>
+        </form>
+      </div>
+    </div>
   </div>
 </div>
 @endsection
