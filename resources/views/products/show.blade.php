@@ -63,9 +63,15 @@
       </div>
   </div>
   <div class="col col-md-6">
-    <button class="btn btn-primary">Message siller</button>
+    <form id="newchatForm" action="/newchat" method="post">
+            {{csrf_field()}}
+            <input type="hidden"  id='proid' name="productID" value="{{$product->id}}">
+             <button  class="btn btn-primary" id="newchatbtn">Message siller</button>
+    </form>
+    
     <button class="btn btn-secondary">Report this item</button>
   </div>
+</div>
   <div class="messageCont">
     <div class="messageHeader">
        Seller Name
@@ -96,4 +102,6 @@
     </div>
   </div>
 </div>
+</div>
+
 @endsection

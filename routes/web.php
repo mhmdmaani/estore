@@ -29,3 +29,5 @@ Route::post('/products/xsearch','ProductsController@xsearch')->middleware(auth::
 Route::get('/product/{id}/disapprove','ProductsController@disapprove');
 Route::get('/product/{id}/approve','ProductsController@approve');
 Route::post('/sendSms','MessagesController@sendSms');
+Route::post('/newchat','MessagesController@newchat');
+Route::get('/newchat','MessagesController@newchat');

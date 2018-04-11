@@ -96,36 +96,29 @@ $('.carousel').carousel();
   /**End Function**/
    /*ajax */
 
-  $('#sendSmsBtn').click(function(){
-
- var formData = new FormData('#sendSmsForm');
- var form = $('#sendSmsForm');
+  $('#newchatbtn').click(function(e){
+    e.preventDefault();
+ var formData = new FormData('#newchatForm');
+ var form = $('#newchatForm');
 $.ajax({
-url: form.attr('action'),
+url: '/newchat',
 method: 'post',
 dataType: 'json',
 contentType: false,
 processData: false,
 
-headers: {
-    'X-CSRF-TOKEN': token.val()
-},
+data:['productID'=>formData['productID']];
 
-data: formData,
+success: function (data) {
 
-error: function (data) {
-
-    if (data.status === 422) {
-
-         name_error.html(data.responseJSON.name);
-         link_error.html(data.responseJSON.link);
-         image_error.html(data.responseJSON.image);
-
-    } else {
-
-         alert('success');
+         console.log('success');
     }
-}
 
   });
+});
+  /*
+  create new chat
+
+  */
+  /*end*/
 });

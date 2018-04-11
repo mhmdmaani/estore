@@ -320,6 +320,7 @@ class ComposerStaticInit79d18ab2079744d47f8a6162f1385d14
 
     public static $classMap = array (
         'App\\Category' => __DIR__ . '/../..' . '/app/Category.php',
+        'App\\Chat' => __DIR__ . '/../..' . '/app/Chat.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Curr' => __DIR__ . '/../..' . '/app/Curr.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
@@ -342,7 +343,6 @@ class ComposerStaticInit79d18ab2079744d47f8a6162f1385d14
         'App\\Http\\Middleware\\TrimStrings' => __DIR__ . '/../..' . '/app/Http/Middleware/TrimStrings.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
-        'App\\Http\\Resources\\Message' => __DIR__ . '/../..' . '/app/Http/Resources/Message.php',
         'App\\Media' => __DIR__ . '/../..' . '/app/Media.php',
         'App\\Message' => __DIR__ . '/../..' . '/app/Message.php',
         'App\\Place' => __DIR__ . '/../..' . '/app/Place.php',

@@ -25,7 +25,7 @@ class Product extends Model
      public function media(){
       return $this->hasMany('App\Media','product_id');
     }
-     public function messages(){
-      return $this->hasMany('App\Message','product_id','id');
+     public function chats(){
+      return $this->hasMany('App\Chat','product_id','id');
     }
 }

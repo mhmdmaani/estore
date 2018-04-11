@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'App\\Category' => $baseDir . '/app/Category.php',
+    'App\\Chat' => $baseDir . '/app/Chat.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Curr' => $baseDir . '/app/Curr.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
@@ -29,7 +30,6 @@ return array(
     'App\\Http\\Middleware\\TrimStrings' => $baseDir . '/app/Http/Middleware/TrimStrings.php',
     'App\\Http\\Middleware\\TrustProxies' => $baseDir . '/app/Http/Middleware/TrustProxies.php',
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
-    'App\\Http\\Resources\\Message' => $baseDir . '/app/Http/Resources/Message.php',
     'App\\Media' => $baseDir . '/app/Media.php',
     'App\\Message' => $baseDir . '/app/Message.php',
     'App\\Place' => $baseDir . '/app/Place.php',

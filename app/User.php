@@ -30,10 +30,10 @@ class User extends Authenticatable
      public function products(){
       return $this->belongsToMany('App\Product');
     }
-     public function sendedmessages(){
-      return $this->belongsToMany('App\Message','messages','sender_id','id');
+      public function chats(){
+        return $this->belongsToMany('App\Chat');
     }
-     public function recivedmessages(){
-      return $this->belongsToMany('App\Message','messages','reciver_id','id');
+      public function sendedMessages(){
+        return $this->belongsToMany('App\Message','sender_id','id');
     }
 }

@@ -10,10 +10,7 @@ class Message extends Model
     public function sender(){
     	return $this->BelongsTo('App\User','sender_id','id');
     	}
-    public function reciver(){
-    	return $this->BelongsTo('App\User','reciver_id','id');
-    	}
-    public function product(){
-    	return $this->BelongsTo('App\Product','product_id','id');
-    	}
+          public function chats(){
+        return $this->BelongsTo('App\Chat','chat_id','id');
+        }      
 }
