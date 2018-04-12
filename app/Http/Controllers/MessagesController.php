@@ -91,12 +91,13 @@ class MessagesController extends Controller
     }
     public function newchat(Request $request){
       $sender = Auth::user();
-      $product=Product::Find($request->input('productID'))->get();
+      $product=Product::Find($request->input('productID'));
       $chat = new Chat();
       $chat->product_id=$product->id;
       $chat->save();
       $product->chats()->save($chat);
       $sender->chats()->save($chat);
+      $chat = json_encode($chat);
        return response()->json($chat);
     }
 }

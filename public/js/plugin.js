@@ -96,7 +96,7 @@ $('.carousel').carousel();
   /**End Function**/
    /*ajax */
 
-  $('#newchatbtn').click(function(e){
+ /* $('#newchatbtn').click(function(e){
     e.preventDefault();
  var formData = new FormData('#newchatForm');
  var form = $('#newchatForm');
@@ -107,7 +107,7 @@ dataType: 'json',
 contentType: false,
 processData: false,
 
-data:['productID'=>formData['productID']];
+data:formData,
 
 success: function (data) {
 
@@ -115,10 +115,39 @@ success: function (data) {
     }
 
   });
-});
+});*/
   /*
   create new chat
 
   */
   /*end*/
+    $( '#newchatForm').on( 'submit', function() {
+ 
+        //.....
+        //show some spinner etc to indicate operation in progress
+        //.....
+ 
+        $.post(
+            $( this ).prop( 'action' ),
+            {
+                "_token": $( this ).find( 'input[name=_token]' ).val(),
+                "productID": $( '#proid').val()
+            },
+            function( data ) {
+              //
+              //When success do 
+              //
+              var div = document.createElement('div');
+                console.log(data);
+            },
+            'json'
+        );
+ 
+        //.....
+        //do anything else you might want to do
+        //.....
+ 
+        //prevent the form from actually submitting in browser
+        return false;
+    } );
 });
