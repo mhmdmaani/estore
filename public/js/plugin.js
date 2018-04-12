@@ -138,6 +138,7 @@ success: function (data) {
               //When success do 
               //
               var div = document.createElement('div');
+              div.setAttribute('class','')
                 console.log(data);
             },
             'json'
