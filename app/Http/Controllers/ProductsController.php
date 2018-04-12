@@ -10,6 +10,7 @@ use App\Category;
 use App\Media;
 use App\Place;
 use App\Curr;
+use App\Chat;
 use Auth;
 class ProductsController extends Controller
 {
@@ -113,6 +114,11 @@ class ProductsController extends Controller
     {
         //
         $product = Product::Find($id);
+        if(Auth::user()->id==$product->user->id){
+            $chat = 
+        }else{
+            $chat = Chat::Where('product_id',$product->id);
+        }
         return view('products.show',['product'=>$product]);
     }
 

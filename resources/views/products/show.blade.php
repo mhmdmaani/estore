@@ -72,36 +72,52 @@
     <button class="btn btn-secondary">Report this item</button>
   </div>
 </div>
-  <div class="messageCont">
-    <div class="messageHeader">
-       Seller Name
-    </div>
-    <div class="messageBody">
-      <div class="oldermessages">
-        <!--loop messages-->
-        <div class="reciversms">
-          <p>loriedsfsdfsdfdsfdsfdsfvxxcvcvfdfgdfgdfgdf dfggfdggdfdgfgfd dfdfgddfgddgdf</p>
-        </div>
-         <div class="sendersms">
-          <p>loriedsfsdfsdfdsfdsfdsfvxxcvcvfdfgdfgdfgdf dfggfdggdfdgfgfd dfdfgddfgddgdf</p>
-        </div>
-        <!--End loop messages-->
-      </div>
-      <div class="sendCont">
-        <form id="sendSmsForm" action="/sendSms" method="post">
-            {{csrf_field()}}
-            <input type="hidden" name="productID" value="{{$product->id}}">
-          <textarea resizable="false" name="smsBody">
+ <!--chat Box-->
+  <!--if auth user same the product owner-->
+  <div id="live-chat">
+    
+    <header class="clearfix">
+      
+      <a href="#" class="chat-close">x</a>
+
+      <h4>{{$product->user->name}}</h4>
+
+      <span class="chat-message-counter">3</span>
+
+    </header>
+
+    <div class="chat">
+      
+      <div class="chat-history">
+        @foreach($chat->messages()->get() as $message )
+        <div class="chat-message clearfix">
+          
+          <img src="{{$message->sender->image}}" alt="" width="32" height="32">
+
+          <div class="chat-message-content clearfix">
             
-          </textarea>
-          <button class="btn btn-primary btn-xs" id="sendSmsBtn"> 
-            <i class="fa fa-paper-plane"></i>
-          </button>
-        </form>
-      </div>
-    </div>
+            <span class="chat-time">{{$message->created_at}}</span>
+            <h5>{{$message->sender->name}}</h5>
+            <p>{{$message->body}}</p>
+          </div> <!-- end chat-message-content -->
+        </div> <!-- end chat-message -->
+         <hr>
+        @endforeach
+
+      </div> <!-- end chat-history -->
+
+      <form action="#" method="post">
+
+        <fieldset>   
+          <input type="text" placeholder="Type your message…" autofocus>
+          <input type="hidden">
+        </fieldset>
+
+      </form>
+
+    </div> <!-- end chat -->
+
+  </div> <!-- end live-chat -->
   </div>
 </div>
-</div>
-
 @endsection

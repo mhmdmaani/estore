@@ -93,6 +93,23 @@ $('.carousel').carousel();
         reader.readAsDataURL(input.files[0]);
     }  
   };
+/*******Slide chat box*******/
+$('#live-chat header').on('click', function() {
+
+    $('.chat').slideToggle(300, 'swing');
+    $('.chat-message-counter').fadeToggle(300, 'swing');
+
+  });
+
+  $('.chat-close').on('click', function(e) {
+
+    e.preventDefault();
+    $('#live-chat').fadeOut(300);
+
+  });
+
+/*******End Slide chat box*******/
+
   /**End Function**/
    /*ajax */
 
@@ -137,9 +154,19 @@ success: function (data) {
               //
               //When success do 
               //
-              var div = document.createElement('div');
-              div.setAttribute('class','')
-                console.log(data);
+        
+                var messageCont = document.createElement('div');
+                var messageHeader = document.createElement('div');
+                var messageBody = document.createElement('div');
+                var oldermessages = document.createElement('div');
+
+                messageCont.setAttribute('class','messageCont');
+                messageCont.setAttribute('id',data['id']);
+                oldermessages.setAttribute('class','oldermessages');
+                messageHeader.setAttribute('class','messageHeader');
+                messageBody.setAttribute('class','messageBody');
+
+
             },
             'json'
         );
