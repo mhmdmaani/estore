@@ -114,12 +114,12 @@ class ProductsController extends Controller
     {
         //
         $product = Product::Find($id);
+         $user = Auth::user();
+       $chats =$user->chats()->where('product_id','=',$product->id)->get();
         if(Auth::user()->id==$product->user->id){
-            $chat = 
-        }else{
-            $chat = Chat::Where('product_id',$product->id);
+            $chats = $product->chats()->get();
         }
-        return view('products.show',['product'=>$product]);
+        return view('products.show',['product'=>$product,'chats'=>$chats]);
     }
 
     /**

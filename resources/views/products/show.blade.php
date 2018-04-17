@@ -74,6 +74,8 @@
 </div>
  <!--chat Box-->
   <!--if auth user same the product owner-->
+  <div class="chatsCont">
+  @foreach($chats as $chat)
   <div id="live-chat">
     
     <header class="clearfix">
@@ -83,19 +85,14 @@
       <h4>{{$product->user->name}}</h4>
 
       <span class="chat-message-counter">3</span>
-
     </header>
-
     <div class="chat">
-      
       <div class="chat-history">
         @foreach($chat->messages()->get() as $message )
-        <div class="chat-message clearfix">
-          
+        <div class="chat-message clearfix">      
           <img src="{{$message->sender->image}}" alt="" width="32" height="32">
 
-          <div class="chat-message-content clearfix">
-            
+          <div class="chat-message-content clearfix">         
             <span class="chat-time">{{$message->created_at}}</span>
             <h5>{{$message->sender->name}}</h5>
             <p>{{$message->body}}</p>
@@ -106,18 +103,18 @@
 
       </div> <!-- end chat-history -->
 
-      <form action="#" method="post">
-
+      <form action="/addmessage" method="post" class="sendmessage">
+         {{csrf_field()}}
         <fieldset>   
-          <input type="text" placeholder="Type your message…" autofocus>
-          <input type="hidden">
+          <input type="text" name="smsBody" placeholder="Type your message…" autofocus>
+          <input type="hidden" name="chatID" value="{{$chat->id}}">
+          <input type="hidden" name="senderID" value="{{Auth::user()->id}}">
         </fieldset>
-
       </form>
-
     </div> <!-- end chat -->
-
   </div> <!-- end live-chat -->
+  @endforeach
   </div>
+</div>
 </div>
 @endsection
