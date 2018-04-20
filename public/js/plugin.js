@@ -123,19 +123,14 @@ method: 'post',
 dataType: 'json',
 contentType: false,
 processData: false,
-
 data:formData,
-
 success: function (data) {
-
          console.log('success');
     }
-
   });
 });*/
   /*
   create new chat
-
   */
   /*end*/
     $( '#newchatForm').on( 'submit', function() {
@@ -240,7 +235,20 @@ success: function (data) {
               //
               //When success do 
               //
-            
+             var sms=[
+              '<div class="chat-message clearfix">',      
+                 '<img src="{{$message->sender->image}}" alt="" width="32" height="32">',
+                  '<div class="chat-message-content clearfix">',         
+            '<span class="chat-time">{{$message->created_at}}</span>',
+            '<h5>{{$message->sender->name}}</h5>',
+             '<p>{{$message->body}}</p>',
+          '</div>',
+        '</div>',
+         '<hr>'
+         ];
+           var htmlsms = sms.join("\n");
+
+              $('#prevMessages').append(htmlsms);            
             },
             'json'
         );

@@ -86,16 +86,33 @@ class MessagesController extends Controller
     {
         //
     }
-    public function sendSms(Request $request){
-       
+    public function sendSms(Request $request)
+    {
+       $sender               = Auth::user();
+       $chatID               = $request->input('chatID');
+       $body                 = $request->input('smsBody');
+       $message              = new Message();
+       $message->sender_id   = $sender->id;
+       $message->chat_id     = $chatID;
+       $message->body        = $body;
+       $message->save();
+       $chat                 = Chat::find($chatID);
+       $chat->messages->save($message);
+       $messages             = $chat->messages();
+       $messages             = json_encode($messages);
+       return response()->json($messages);
     }
-    public function newchat(Request $request){
+
+    public function newchat(Request $request)
+    {
       $sender = Auth::user();
       $product = Product::Find($request->input('productID'));
-       $chat=null;
-      if($sender->chats()->count('product_id','=',$product->id)>0){
+      $chat=null;
+      if($sender->chats()->count('product_id','=',$product->id)>0)
+      {
           $chat=null;
-      }else{
+      }else
+      {
       $chat = new Chat();
       $chat->product_id=$product->id;
       $chat->save();

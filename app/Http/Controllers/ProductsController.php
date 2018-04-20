@@ -114,7 +114,6 @@ class ProductsController extends Controller
     {
         //
         $product = Product::Find($id);
-<<<<<<< HEAD
         $chats = null;
         if(Auth::user())
         {
@@ -125,15 +124,14 @@ class ProductsController extends Controller
                 $chats = $product->chats()->get();
             }
 
-=======
          $user = Auth::user();
        $chats =$user->chats()->where('product_id','=',$product->id)->get();
         if(Auth::user()->id==$product->user->id){
             $chats = $product->chats()->get();
->>>>>>> 7921f3756e5814798a513a7812fd0f8f3b31e7e2
         }
         return view('products.show',['product'=>$product,'chats'=>$chats]);
     }
+}
 
     /**
      * Show the form for editing the specified resource.

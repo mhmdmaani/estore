@@ -48,7 +48,7 @@
     <h3 class=" proName text-center">{{$product->name}}</h3>
     <div class="col col-md-6">
       <div class="proInfo">
-             <p class="price"><span>{{$product->price}}</span>  {{$product->curr->name}}</p>
+            <p class="price"><span>{{$product->price}}</span>  {{$product->curr->name}}</p>
             <h5>City:   <span>{{$product->place->name}}</span></h5>
             <h5>published at:  <span>{{$product->created_at}}</span></h5>
             <h6>{{$product->description}}</h6>
@@ -77,8 +77,6 @@
   <div class="chatsCont">
 <<<<<<< HEAD
 @if($chats)
-=======
->>>>>>> 7921f3756e5814798a513a7812fd0f8f3b31e7e2
   @foreach($chats as $chat)
   <div id="live-chat">
     
@@ -91,7 +89,7 @@
       <span class="chat-message-counter">3</span>
     </header>
     <div class="chat">
-      <div class="chat-history">
+      <div class="chat-history" id="prevMessages">
         @foreach($chat->messages()->get() as $message )
         <div class="chat-message clearfix">      
           <img src="{{$message->sender->image}}" alt="" width="32" height="32">
