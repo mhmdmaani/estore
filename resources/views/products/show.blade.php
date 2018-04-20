@@ -75,7 +75,10 @@
  <!--chat Box-->
   <!--if auth user same the product owner-->
   <div class="chatsCont">
+<<<<<<< HEAD
 @if($chats)
+=======
+>>>>>>> 7921f3756e5814798a513a7812fd0f8f3b31e7e2
   @foreach($chats as $chat)
   <div id="live-chat">
     
@@ -115,7 +118,10 @@
     </div> <!-- end chat -->
   </div> <!-- end live-chat -->
   @endforeach
+<<<<<<< HEAD
 @endif
+=======
+>>>>>>> 7921f3756e5814798a513a7812fd0f8f3b31e7e2
   </div>
 </div>
 </div>

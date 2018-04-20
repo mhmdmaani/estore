@@ -49,6 +49,7 @@
                             <li><a href="{{ route('login') }}">Login</a></li>
                             <li><a href="{{ route('register') }}">Register</a></li>
                         @else
+<<<<<<< HEAD
                         <li>
                             <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
@@ -56,6 +57,8 @@
                                             Logout
                                         </a>
                         </li>
+=======
+>>>>>>> 7921f3756e5814798a513a7812fd0f8f3b31e7e2
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{ Auth::user()->name }} <span class="caret"></span>
