@@ -1,6 +1,5 @@
 $('document').ready(function(){
 $('.carousel').carousel();
-
 /*Dealing with images */
  $('#postimg').click(function()
     {
@@ -108,27 +107,26 @@ $('#live-chat header').on('click', function() {
 
   });
 
-/*******End Slide chat box*******/
-
-  /**End Function**/
-   /*ajax */
-
- /* $('#newchatbtn').click(function(e){
-    e.preventDefault();
- var formData = new FormData('#newchatForm');
- var form = $('#newchatForm');
-$.ajax({
-url: '/newchat',
-method: 'post',
-dataType: 'json',
-contentType: false,
-processData: false,
-data:formData,
-success: function (data) {
-         console.log('success');
-    }
-  });
-});*/
+/*messsage area button click*/
+$('.postimg').click(function()
+    {
+        $img = document.createElement('input');
+        $img.setAttribute('type', 'file');
+        $img.setAttribute('name','imgFiles[]');
+        $img.setAttribute('accept','image/*');
+        $img.setAttribute('class','imgfiles hidden');
+        $div = document.createElement("div");
+        $contdiv = document.createElement("div");
+        $contdiv.setAttribute('class','responsive');
+        $div.setAttribute('class','gallery');
+        $img.addEventListener("change",function(){
+        readURLImage(this ,$div); 
+        });
+          $div.append($img);
+          $contdiv.append($div);
+        $(this).parent().find('.postreview').append($contdiv);
+        $(this).parent().find('.imgfiles').last().trigger('click');
+    });
   /*
   create new chat
   */
@@ -143,7 +141,7 @@ success: function (data) {
             $( this ).prop( 'action' ),
             {
                 "_token": $( this ).find( 'input[name=_token]' ).val(),
-                "productID": $( '#proid').val()
+                "productID": $('#proid').val()
             },
             function( data ) {
               //
@@ -202,7 +200,7 @@ success: function (data) {
             '</div>',
                     ]);
           var chathtml = html.join("\n");
-          $('chatsCont').append(chathtml);
+          $('#chatsCont').append(chathtml);
       }
             },
             'json'
@@ -217,48 +215,87 @@ success: function (data) {
     });
     /*End Create or appear exist chat*/
     /*Send message*/
-     $( '.sendmessage').on( 'submit', function() {
- 
-        //.....
-        //show some spinner etc to indicate operation in progress
-        //.....
- 
-        $.post(
+    /* $('.sendmessage').on( 'submit', function(e) {
+     e.preventDefault();
+       var formData = new FormData($(this).parents('form')[0]);
+      formData.append('chatID',$(this).children('.chatID').first().val());
+      formData.append('_token',$(this).find('input[name=_token]').first().val());
+      formData.append('smsBody',$(this).children('.smsBody').first().val());
+     $.post(
             $( this ).prop( 'action' ),
-            {
-                "_token": $('meta[name="csrf-token"]').attr('content'),
-                "chatID": $(this).children([name='chatID']).first().val(),
-                "smsBody":$(this).children([name='smsBody']).first().val(),
-                "senderID":$(this).children([name='senderID']).first().val(),
-            },
+            data:formData,
             function( data ) {
               //
-              //When success do 
-              //
+                var message = data['message'];
+              var sender = data['sender'];
+              var chat = data['chat'];
              var sms=[
               '<div class="chat-message clearfix">',      
-                 '<img src="{{$message->sender->image}}" alt="" width="32" height="32">',
+                 '<img src="'+sender.image+'" alt="" width="32" height="32">',
                   '<div class="chat-message-content clearfix">',         
-            '<span class="chat-time">{{$message->created_at}}</span>',
-            '<h5>{{$message->sender->name}}</h5>',
-             '<p>{{$message->body}}</p>',
+            '<span class="chat-time">'+message.created_at+'</span>',
+            '<h5>'+sender.name+'</h5>',
+             '<p>'+message.body+'</p>',
           '</div>',
         '</div>',
          '<hr>'
          ];
            var htmlsms = sms.join("\n");
-
-              $('#prevMessages').append(htmlsms);            
+          $('#'+chat+'text').append(htmlsms);
+              console.log(chat);
             },
-            'json'
+            'json',
         );
- 
-        //.....
-        //do anything else you might want to do
-        //.....
- 
-        //prevent the form from actually submitting in browser
-        return false;
-    });
+      
     /*End send message*/
+/*});*/
+
+$('.chat').on('click', '.sendbtn', function(e)
+    {
+     e.preventDefault();
+     var formData = new FormData($(this).parents('form')[0]);
+     $.ajax({
+        url   : '/addmessage',
+        type  : 'POST',
+        xhr   : function() 
+            {
+            var myXhr = $.ajaxSettings.xhr();
+            return myXhr;
+            },
+        success: function (data) {                 
+        var message = data['message'],
+            sender  = data['sender'],
+            chat    = data['chat'];
+        var sms     =[
+        '<div class="chat-message clearfix">',      
+           '<img src="'+sender.image+'" alt="" width="32" height="32">',
+           '<div class="chat-message-content clearfix">',         
+              '<span class="chat-time">'+message.created_at+'</span>',
+              '<h5>'+sender.name+'</h5>',
+              '<p>'+message.body+'</p>',
+              ];
+              $.each(message['smsimages'],function(key,img)
+                  {
+           sms.push([
+                    '<div class="row">',
+                      '<a href="/storage/images/'+img.path+'" target="#">',                     
+                       '<img src="/storage/images/"'+img.path+'">',
+                      '</a>',
+                    '</div>'
+                      ]);
+                  });
+              sms.push([
+                    '</div></div><hr>'
+                ]);           
+          var htmlsms = sms.join("\n");
+          $('#'+chat.id+'text').append(htmlsms);
+              },
+              data       : formData,
+              cache      : false,
+              contentType: false,
+              processData: false
+          });// end ajax function
+        return false;
+  });//end inserting message
 });
+

@@ -54,10 +54,6 @@
             <div class="bs-example">
             <input name="tags" type="text" data-role="tagsinput" value="" />
             </div> 
-              <div class="form-group" id="postreview">
-                  <!--here will place new images and thire paths-->
-              </div>
-
           <div class="form-group" id="postreview">
               <!--paths-->
           </div>

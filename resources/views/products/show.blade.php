@@ -21,6 +21,7 @@
     <div class="item active">
        <div class="item">
         <div style="width: 100% ; height:500px;background:#333;overflow: hidden;">
+      <a href="/storage/images/{{$media->path}}"  target="#">
       <img src="/storage/images/{{$media->path}}" alt="" style="width: 100%; max-height: 500px">
     </div>
     </div>
@@ -28,7 +29,9 @@
     @else
       <div class="item">
         <div style="width: 100% ; height:500px;background:#333;overflow: hidden;margin: auto">
-      <img src="/storage/images/{{$media->path}}" alt="Los Angeles" style="max-width: 100%; max-height: 100%">
+      <a href="/storage/images/{{$media->path}}"  target="#">
+       <img src="/storage/images/{{$media->path}}" alt="Los Angeles" style="max-width: 100%; max-height: 100%">
+      </a>
     </div>
     </div>
     @endif
@@ -75,7 +78,6 @@
  <!--chat Box-->
   <!--if auth user same the product owner-->
   <div class="chatsCont">
-<<<<<<< HEAD
 @if($chats)
   @foreach($chats as $chat)
   <div id="live-chat">
@@ -88,8 +90,8 @@
 
       <span class="chat-message-counter">3</span>
     </header>
-    <div class="chat">
-      <div class="chat-history" id="prevMessages">
+    <div class="chat" >
+      <div class="chat-history" id="{{$chat->id}}text">
         @foreach($chat->messages()->get() as $message )
         <div class="chat-message clearfix">      
           <img src="{{$message->sender->image}}" alt="" width="32" height="32">
@@ -98,6 +100,15 @@
             <span class="chat-time">{{$message->created_at}}</span>
             <h5>{{$message->sender->name}}</h5>
             <p>{{$message->body}}</p>
+            @if($message->smsimages()->count()>0)
+            @foreach($message->smsimages as $img)
+                <div class="row">
+                  <a href="/storage/images/{{$img->path}}" target="#">
+                  <img src="/storage/images/{{$img->path}}"/>
+                </a>
+                </div>
+            @endforeach
+            @endif
           </div> <!-- end chat-message-content -->
         </div> <!-- end chat-message -->
          <hr>
@@ -105,21 +116,25 @@
 
       </div> <!-- end chat-history -->
 
-      <form action="/addmessage" method="post" class="sendmessage">
-         {{csrf_field()}}
-        <fieldset>   
-          <input type="text" name="smsBody" placeholder="Type your message…" autofocus>
-          <input type="hidden" name="chatID" value="{{$chat->id}}">
+      <form action="addmessage" method="post" class="sendmessage"  enctype="multipart/form-data">
+          {!!csrf_field()!!}
+          <input type="text" name="smsBody" placeholder="Type your message…" autofocus class="smsBody">
+          <input type="hidden" name="chatID" value="{{$chat->id}}" class="chatID">
           <input type="hidden" name="senderID" value="{{Auth::user()->id}}">
-        </fieldset>
+          <div class="form-group postreview" >
+              <!--paths-->
+      </div>
+         <button class="sendbtn"><i class="fa fa-plane"></i></button>
+   
       </form>
+      
+      <button class="btn btn-secondary postimg" >
+         <i class="fa fa-photo" ></i>
+      </button>
     </div> <!-- end chat -->
   </div> <!-- end live-chat -->
   @endforeach
-<<<<<<< HEAD
 @endif
-=======
->>>>>>> 7921f3756e5814798a513a7812fd0f8f3b31e7e2
   </div>
 </div>
 </div>

@@ -8,6 +8,7 @@ use App\Product;
 use auth;
 use App\User;
 use App\Chat;
+use App\Smsimage;
 use App\Resources\Http\Resources\Message as MessageResource;
 class MessagesController extends Controller
 {
@@ -86,39 +87,61 @@ class MessagesController extends Controller
     {
         //
     }
-    public function sendSms(Request $request)
+    public function sendsms(Request $request)
     {
-       $sender               = Auth::user();
+       $user                 = Auth::user();
        $chatID               = $request->input('chatID');
        $body                 = $request->input('smsBody');
+       $images               = $request->file('imgFiles');
        $message              = new Message();
-       $message->sender_id   = $sender->id;
+       $message->sender_id   = $user->id;
        $message->chat_id     = $chatID;
        $message->body        = $body;
-       $message->save();
-       $chat                 = Chat::find($chatID);
-       $chat->messages->save($message);
-       $messages             = $chat->messages();
-       $messages             = json_encode($messages);
-       return response()->json($messages);
-    }
+       $sms                  = $message->save();
+     if(!empty($images))
+     {
+     foreach($images as $image=> $value) 
+       {
+       $imgName              = md5(time().uniqid()).'.'.$value->getClientOriginalExtension();
+         $value->storeAs('public/images',$imgName);
+         $img                = new Smsimage();
+         $img->path          = $imgName;
+         $img->message_id    = $message->id;
+         $img->save();
+         $message->smsimages()->save($img);
+       }
 
+       $chat                 = Chat::find($chatID);
+       $chat->messages()->save($message);
+       $userName             = $user->name;
+       $sender               = Auth::user();
+       $chat                 = $message->chat;
+       $product              = $chat->product;
+       return response()
+              ->json([
+      'sender'               =>$sender,
+      'message'              =>$message,
+      'chat'                 =>$chat,
+      'product'              =>$product
+                     ]);
+    }
+  }    
     public function newchat(Request $request)
     {
-      $sender = Auth::user();
-      $product = Product::Find($request->input('productID'));
-      $chat=null;
+      $sender                = Auth::user();
+      $product               = Product::Find($request->input('productID'));
+      $chat                  = null;
       if($sender->chats()->count('product_id','=',$product->id)>0)
       {
-          $chat=null;
+       $chat                 = null;
       }else
       {
-      $chat = new Chat();
-      $chat->product_id=$product->id;
-      $chat->save();
-      $product->chats()->save($chat);
-      $sender->chats()->save($chat);
-      $chat = json_encode($chat);
+       $chat                 = new Chat();
+      $chat->product_id      = $product->id;
+      $chat                  ->save();
+      $product->chats()      ->save($chat);
+      $sender->chats()       ->save($chat);
+      $chat                  = json_encode($chat);
       }
        return response()->json($chat);
     }
