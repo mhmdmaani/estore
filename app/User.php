@@ -33,7 +33,7 @@ class User extends Authenticatable
       public function chats(){
         return $this->belongsToMany('App\Chat');
     }
-      public function sendedMessages(){
-        return $this->belongsToMany('App\Message','sender_id','id');
+      public function messages(){
+        return $this->hasMany('App\Message','sender_id','id');
     }
 }

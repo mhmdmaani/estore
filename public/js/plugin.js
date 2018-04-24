@@ -249,13 +249,23 @@ $('.postimg').click(function()
       
     /*End send message*/
 /*});*/
-
+$.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+            });
 $('.chat').on('click', '.sendbtn', function(e)
     {
+      $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+            });
+      var proID = $('#proid').val();
      e.preventDefault();
      var formData = new FormData($(this).parents('form')[0]);
      $.ajax({
-        url   : '/addmessage',
+        url   : '/addmessage/'+proID,
         type  : 'POST',
         xhr   : function() 
             {
@@ -263,32 +273,36 @@ $('.chat').on('click', '.sendbtn', function(e)
             return myXhr;
             },
         success: function (data) {                 
-        var message = data['message'],
-            sender  = data['sender'],
-            chat    = data['chat'];
-        var sms     =[
-        '<div class="chat-message clearfix">',      
-           '<img src="'+sender.image+'" alt="" width="32" height="32">',
-           '<div class="chat-message-content clearfix">',         
-              '<span class="chat-time">'+message.created_at+'</span>',
-              '<h5>'+sender.name+'</h5>',
-              '<p>'+message.body+'</p>',
-              ];
-              $.each(message['smsimages'],function(key,img)
+        var message = data['message'];
+           var sender  = data['sender'];
+           var chat    = data['chat'];
+           var smsimages=data['smsimages'];
+           console.log(message);
+           console.log(message['created_at']);
+            var sms=[
+              '<div class="chat-message clearfix">',      
+                 '<img src="'+sender.image+'" alt="" width="32" height="32">',
+                  '<div class="chat-message-content clearfix">',         
+            '<span class="chat-time">'+message.created_at+'</span>',
+            '<h5>'+sender.name+'</h5>',
+             '<p>'+message.body+'</p>'];
+              $.each(smsimages, function(key,value)
                   {
-           sms.push([
-                    '<div class="row">',
-                      '<a href="/storage/images/'+img.path+'" target="#">',                     
-                       '<img src="/storage/images/"'+img.path+'">',
-                      '</a>',
-                    '</div>'
+                    console.log(value['path']);
+
+sms.push([
+                    '<div class="row">'+'<a href="/storage/images/'+value['path']+'" target="#">'+'<img src="/storage/images/'+value['path']+'">'+'</a>'+'</div>'
                       ]);
                   });
-              sms.push([
+ sms.push([
                     '</div></div><hr>'
-                ]);           
-          var htmlsms = sms.join("\n");
-          $('#'+chat.id+'text').append(htmlsms);
+                ]);  
+ console.log($(this).attr('class'));
+    
+         var htmlsms = sms.join("\n");
+          $('#'+chat['id']+'text').append(htmlsms);
+          $('#'+chat['id']+'text').parents('.chat').find('.postreview').empty();
+          $('#'+chat['id']+'text').parents('.chat').find('input[name=smsBody]').val('');
               },
               data       : formData,
               cache      : false,

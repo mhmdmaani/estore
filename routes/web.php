@@ -28,7 +28,7 @@ Route::post('/products/searchbyname','ProductsController@searchbyname')->middlew
 Route::post('/products/xsearch','ProductsController@xsearch')->middleware(auth::class); 
 Route::get('/product/{id}/disapprove','ProductsController@disapprove');
 Route::get('/product/{id}/approve','ProductsController@approve');
-Route::post('addmessage','MessagesController@sendsms');
-Route::get('addmessage','MessagesController@sendsms');
+Route::post('/addmessage/{id}','MessagesController@sendsms');
+Route::get('/addmessage/{id}','MessagesController@sendsms');
 Route::post('newchat','MessagesController@newchat');
 Route::get('newchat','MessagesController@newchat');

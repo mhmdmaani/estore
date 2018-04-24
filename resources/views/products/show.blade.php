@@ -90,13 +90,13 @@
 
       <span class="chat-message-counter">3</span>
     </header>
-    <div class="chat" >
+    <div class="chat">
       <div class="chat-history" id="{{$chat->id}}text">
         @foreach($chat->messages()->get() as $message )
         <div class="chat-message clearfix">      
           <img src="{{$message->sender->image}}" alt="" width="32" height="32">
 
-          <div class="chat-message-content clearfix">         
+          <div class="chat-message-content clearfix" >         
             <span class="chat-time">{{$message->created_at}}</span>
             <h5>{{$message->sender->name}}</h5>
             <p>{{$message->body}}</p>
@@ -104,8 +104,8 @@
             @foreach($message->smsimages as $img)
                 <div class="row">
                   <a href="/storage/images/{{$img->path}}" target="#">
-                  <img src="/storage/images/{{$img->path}}"/>
-                </a>
+                    <img src="/storage/images/{{$img->path}}"/>
+                  </a>
                 </div>
             @endforeach
             @endif
@@ -120,12 +120,11 @@
           {!!csrf_field()!!}
           <input type="text" name="smsBody" placeholder="Type your message…" autofocus class="smsBody">
           <input type="hidden" name="chatID" value="{{$chat->id}}" class="chatID">
-          <input type="hidden" name="senderID" value="{{Auth::user()->id}}">
+          <input type="hidden" name="senderID" value="{{Auth::user()->id}}"> <input type="hidden" name="id" value="{{$product->id}}">
           <div class="form-group postreview" >
               <!--paths-->
       </div>
          <button class="sendbtn"><i class="fa fa-plane"></i></button>
-   
       </form>
       
       <button class="btn btn-secondary postimg" >

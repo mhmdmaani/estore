@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Message;
 use App\Product;
-use auth;
+use Auth;
 use App\User;
 use App\Chat;
 use App\Smsimage;
@@ -89,6 +89,8 @@ class MessagesController extends Controller
     }
     public function sendsms(Request $request)
     {
+      if($request->isMethod('post'))
+      {
        $user                 = Auth::user();
        $chatID               = $request->input('chatID');
        $body                 = $request->input('smsBody');
@@ -113,18 +115,24 @@ class MessagesController extends Controller
 
        $chat                 = Chat::find($chatID);
        $chat->messages()->save($message);
-       $userName             = $user->name;
-       $sender               = Auth::user();
+       $sender               =User::Find(Auth::user()->id);
+       $sender->messages()->save($message);
        $chat                 = $message->chat;
        $product              = $chat->product;
+       $smsimages            =$message->smsimages()->get();
+      /* $message              =json_encode($message);
+       $sender               =json_encode($sender);
+       $chat                 =json_encode($chat);
+      $smsimages            =json_encode($smsimages);*/
        return response()
               ->json([
-      'sender'               =>$sender,
       'message'              =>$message,
+      'sender'               =>$sender,
       'chat'                 =>$chat,
-      'product'              =>$product
+      'smsimages'            =>$smsimages
                      ]);
     }
+  }
   }    
     public function newchat(Request $request)
     {
