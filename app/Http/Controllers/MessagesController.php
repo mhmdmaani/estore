@@ -102,7 +102,7 @@ class MessagesController extends Controller
        $sms                  = $message->save();
      if(!empty($images))
      {
-     foreach($images as $image=> $value) 
+     foreach($images as $image=> $value)
        {
        $imgName              = md5(time().uniqid()).'.'.$value->getClientOriginalExtension();
          $value->storeAs('public/images',$imgName);
@@ -133,7 +133,7 @@ class MessagesController extends Controller
       'smsimages'            =>$smsimages
                      ]);
   }
-  }    
+  }
     public function newchat(Request $request)
     {
       $sender                = Auth::user();
@@ -155,8 +155,8 @@ class MessagesController extends Controller
     }
     public function latestsms(Request $request)
     {
-      $productID    = $request->input('productID');
-      $chats        =Product::find(1)->chats()->get();
-       return response(['chats'=>$chats]);  
+      $productID    = $request->id;
+      $chats        =Product::find($productID)->chats()->with('messages')->get();
+       return response(['chats'=>$chats]);
      }
 }

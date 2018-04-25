@@ -13,18 +13,18 @@ $('.carousel').carousel();
         $contdiv.setAttribute('class','responsive');
         $div.setAttribute('class','gallery');
         $img.addEventListener("change",function(){
-        readURLImage(this ,$div); 
+        readURLImage(this ,$div);
         });
           $div.append($img);
           $contdiv.append($div);
           $('#postreview').append($contdiv);
         $('.imgfiles').last().trigger('click');
-        
+
 
     });
  /*End Images*/
  /*Dealing with videos*/
-  $('#postvideo').click(function () 
+  $('#postvideo').click(function ()
     {
         $vid = document.createElement('input');
         $vid.setAttribute('type', 'file');
@@ -32,9 +32,9 @@ $('.carousel').carousel();
         $vid.setAttribute('accept','video/*');
         $vid.setAttribute('class','vidfiles');
         $vid.addEventListener("change",function(){
-             readURLVideo(this,$('#postreview')); 
+             readURLVideo(this,$('#postreview'));
         });
-       
+
         $('#paths').append($vid);
         $('.vidfiles').last().trigger('click');
     });
@@ -45,7 +45,7 @@ $('.carousel').carousel();
 
  /*helper functions*/
  /**Read Image and display it in the page**/
-   function readURLImage(input , $container) 
+   function readURLImage(input , $container)
     {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
@@ -71,7 +71,7 @@ $('.carousel').carousel();
   };
   /**End Function**/
   /**Read Image and display it in the page**/
-  function readURLVideo(input,$container) 
+  function readURLVideo(input,$container)
     {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
@@ -90,7 +90,7 @@ $('.carousel').carousel();
         };
 
         reader.readAsDataURL(input.files[0]);
-    }  
+    }
   };
 /*******Slide chat box*******/
 $('#live-chat header').on('click', function() {
@@ -120,7 +120,7 @@ $('.postimg').click(function()
         $contdiv.setAttribute('class','responsive');
         $div.setAttribute('class','gallery');
         $img.addEventListener("change",function(){
-        readURLImage(this ,$div); 
+        readURLImage(this ,$div);
         });
           $div.append($img);
           $contdiv.append($div);
@@ -132,11 +132,11 @@ $('.postimg').click(function()
   */
   /*end*/
     $( '#newchatForm').on( 'submit', function() {
- 
+
         //.....
         //show some spinner etc to indicate operation in progress
         //.....
- 
+
         $.post(
             $( this ).prop( 'action' ),
             {
@@ -145,7 +145,7 @@ $('.postimg').click(function()
             },
             function( data ) {
               //
-              //When success do 
+              //When success do
               //
               var chat = data['chat'];
 
@@ -155,7 +155,7 @@ $('.postimg').click(function()
                }else{
                 var messages = chat['messages'];
                     var html = [
-                                '<div id="live-chat">',    
+                                '<div id="live-chat">',
                                     '<header class="clearfix">',
                                           '<a href="#" class="chat-close">x</a>',
                                       '<h4>{{$product->user->name}}</h4>',
@@ -165,10 +165,10 @@ $('.postimg').click(function()
                                       '<div class="chat-history">'
                                   ];
         $.each(chat.messages,function(key,value ){
-                    html.push([ 
-                                '<div class="chat-message clearfix">',      
+                    html.push([
+                                '<div class="chat-message clearfix">',
                                 '<img src="'+value.sender.image+'" alt="" width="32" height="32">',
-                                '<div class="chat-message-content clearfix">',        
+                                '<div class="chat-message-content clearfix">',
                                   '<span class="chat-time">'+value.created_at+'</span>',
                                   '<h5>'+value.sender.name+'</h5>',
                                   '<p>'+value.body+'</p>',
@@ -191,7 +191,7 @@ $('.postimg').click(function()
 
         html.push([
          '<form action="#" method="post" class="sendmessage">',
-                  '<fieldset>',   
+                  '<fieldset>',
                     '<input type="text" placeholder="Type your message…" autofocus>',
                     '<input type="hidden" name="chatID" value="'+chat.id+'">',
                   '</fieldset>',
@@ -205,11 +205,11 @@ $('.postimg').click(function()
             },
             'json'
         );
- 
+
         //.....
         //do anything else you might want to do
         //.....
- 
+
         //prevent the form from actually submitting in browser
         return false;
     });
@@ -231,12 +231,12 @@ $('.chat').on('click', '.sendbtn', function(e)
      $.ajax({
         url   : '/addmessage/'+proID,
         type  : 'POST',
-        xhr   : function() 
+        xhr   : function()
             {
             var myXhr = $.ajaxSettings.xhr();
             return myXhr;
             },
-        success: function (data) {                 
+        success: function (data) {
         var message = data['message'];
            var sender  = data['sender'];
            var chat    = data['chat'];
@@ -244,9 +244,9 @@ $('.chat').on('click', '.sendbtn', function(e)
            console.log(message);
            console.log(message['created_at']);
             var sms=[
-              '<div class="chat-message clearfix">',      
+              '<div class="chat-message clearfix">',
                  '<img src="'+sender.image+'" alt="" width="32" height="32">',
-                  '<div class="chat-message-content clearfix">',         
+                  '<div class="chat-message-content clearfix">',
             '<span class="chat-time">'+message.created_at+'</span>',
             '<h5>'+sender.name+'</h5>',
              '<p>'+message.body+'</p>'];
@@ -260,9 +260,9 @@ sms.push([
                   });
  sms.push([
                     '</div></div><hr>'
-                ]);  
+                ]);
  console.log($(this).attr('class'));
-    
+
          var htmlsms = sms.join("\n");
           $('#'+chat['id']+'text').append(htmlsms);
           $('#'+chat['id']+'text').parents('.chat').find('.postreview').empty();
@@ -281,29 +281,64 @@ sms.push([
   retriveLatestSms();
   retriveLatestSms();
 }, 1000);*/
- $('#test').click(function latestsms(productID){
+ $('#test').click(function latestsms(){
+   var id=1;
      $.ajax({
-      url   :'/latestsms ',
-      type  : 'POST',
+      url   :'/latestsms/'+id,
+      type  : 'get',
       data  :
-      {
-         "_token": $( this ).find( 'input[name=_token]' ).val(),
-          'productID':1
-      },
-       xhr  : function() 
+            {
+              "_token": $( this ).find( 'input[name=_token]' ).val(),
+            },
+       xhr  : function()
             {
             var myXhr = $.ajaxSettings.xhr();
             return myXhr;
             },
       success:function(data){
         var chats = data.chats;
-        //pass loop of all product chats
-      //  console.log(chats);
-        //pass loop of all chat messages
-        $.each(chats, function(key,chat){
-          $.each(chat.messages, function(key,message)
+        $.each(chats, function(chatkey,chat){
+
+          var lastdate =   $('#'+chat.id+'text').children('.chat-message:last-child').find('chat-time').innerHTML;
+          console.log(lastdate);
+          $.each(chat.messages, function(smsKey,message)
           {
-         console.log(message.body);
+            console.log(totSms);
+            console.log("last three sms :"+totSms-smsKey);
+            if((totSms-smsKey)<=10 && (totSms-smsKey)>0)
+            {
+              console.log(message.body);
+             var html =
+              [
+                '<div class="chat-message clearfix">',
+                  '<img src="{{$message->sender->image}}" alt="" width="32" height="32">',
+
+                 ' <div class="chat-message-content clearfix" >',
+                    '<span class="chat-time">'+message.created_at+'</span>',
+                    '<h5>'+message.sender.name+'</h5>',
+                    '<p>'+message.body+'</p>',
+                  ];
+                    $.each(message.smsimages,function(key,img)
+                    {
+                      html.push([
+                        ' <div class="row">',
+                           '<a href="/storage/images/'+img.path+'" target="#">',
+                            '<img src="/storage/images/'+img.path+'"/>',
+                        '   </a>',
+                        ' </div>',
+                              ]);
+
+                    });
+                    html.push([
+                      '</div>',
+                    '</div>',
+                     '<hr>'
+                    ]);
+                     var htmlsms = html.join("\n");
+                      $('#'+chat.id+'text').append(htmlsms);
+            }else{
+ console.log(totSms-smsKey);
+            }
         });
         });
       },
@@ -314,4 +349,3 @@ sms.push([
 });
 
 });
-
