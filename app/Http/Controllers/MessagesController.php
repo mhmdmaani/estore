@@ -112,6 +112,7 @@ class MessagesController extends Controller
          $img->save();
          $message->smsimages()->save($img);
        }
+     }
 
        $chat                 = Chat::find($chatID);
        $chat->messages()->save($message);
@@ -131,7 +132,6 @@ class MessagesController extends Controller
       'chat'                 =>$chat,
       'smsimages'            =>$smsimages
                      ]);
-    }
   }
   }    
     public function newchat(Request $request)
@@ -149,8 +149,14 @@ class MessagesController extends Controller
       $chat                  ->save();
       $product->chats()      ->save($chat);
       $sender->chats()       ->save($chat);
-      $chat                  = json_encode($chat);
+      $chat                  = $chat;
       }
        return response()->json($chat);
     }
+    public function latestsms(Request $request)
+    {
+      $productID    = $request->input('productID');
+      $chats        =Product::find(1)->chats()->get();
+       return response(['chats'=>$chats]);  
+     }
 }

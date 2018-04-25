@@ -69,7 +69,7 @@
     <form id="newchatForm" action="/newchat" method="post">
             {{csrf_field()}}
             <input type="hidden"  id='proid' name="productID" value="{{$product->id}}">
-             <button  class="btn btn-primary" id="newchatbtn">Message siller</button>
+             <button class="btn btn-primary" id="newchatbtn">Message siller</button>
     </form>
     
     <button class="btn btn-secondary">Report this item</button>
@@ -137,4 +137,8 @@
   </div>
 </div>
 </div>
+<button id="test">Get latest sms </button>
+<script type="text/javascript">
+ 
+</script>
 @endsection

@@ -32,3 +32,5 @@ Route::post('/addmessage/{id}','MessagesController@sendsms');
 Route::get('/addmessage/{id}','MessagesController@sendsms');
 Route::post('newchat','MessagesController@newchat');
 Route::get('newchat','MessagesController@newchat');
+Route::post('latestsms','MessagesController@latestsms');
+Route::get('latestsms','MessagesController@latestsms');

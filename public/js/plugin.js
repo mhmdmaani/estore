@@ -213,42 +213,6 @@ $('.postimg').click(function()
         //prevent the form from actually submitting in browser
         return false;
     });
-    /*End Create or appear exist chat*/
-    /*Send message*/
-    /* $('.sendmessage').on( 'submit', function(e) {
-     e.preventDefault();
-       var formData = new FormData($(this).parents('form')[0]);
-      formData.append('chatID',$(this).children('.chatID').first().val());
-      formData.append('_token',$(this).find('input[name=_token]').first().val());
-      formData.append('smsBody',$(this).children('.smsBody').first().val());
-     $.post(
-            $( this ).prop( 'action' ),
-            data:formData,
-            function( data ) {
-              //
-                var message = data['message'];
-              var sender = data['sender'];
-              var chat = data['chat'];
-             var sms=[
-              '<div class="chat-message clearfix">',      
-                 '<img src="'+sender.image+'" alt="" width="32" height="32">',
-                  '<div class="chat-message-content clearfix">',         
-            '<span class="chat-time">'+message.created_at+'</span>',
-            '<h5>'+sender.name+'</h5>',
-             '<p>'+message.body+'</p>',
-          '</div>',
-        '</div>',
-         '<hr>'
-         ];
-           var htmlsms = sms.join("\n");
-          $('#'+chat+'text').append(htmlsms);
-              console.log(chat);
-            },
-            'json',
-        );
-      
-    /*End send message*/
-/*});*/
 $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -311,5 +275,43 @@ sms.push([
           });// end ajax function
         return false;
   });//end inserting message
+/*Retrive latest sms*/
+/*setInterval(function(){
+  console.log('test');
+  retriveLatestSms();
+  retriveLatestSms();
+}, 1000);*/
+ $('#test').click(function latestsms(productID){
+     $.ajax({
+      url   :'/latestsms ',
+      type  : 'POST',
+      data  :
+      {
+         "_token": $( this ).find( 'input[name=_token]' ).val(),
+          'productID':1
+      },
+       xhr  : function() 
+            {
+            var myXhr = $.ajaxSettings.xhr();
+            return myXhr;
+            },
+      success:function(data){
+        var chats = data.chats;
+        //pass loop of all product chats
+      //  console.log(chats);
+        //pass loop of all chat messages
+        $.each(chats, function(key,chat){
+          $.each(chat.messages, function(key,message)
+          {
+         console.log(message.body);
+        });
+        });
+      },
+              cache      : false,
+              contentType: false,
+              processData: false
+     });
+});
+
 });
 
