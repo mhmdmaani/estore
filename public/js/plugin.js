@@ -241,9 +241,10 @@ $('.chat').on('click', '.sendbtn', function(e)
            var sender  = data['sender'];
            var chat    = data['chat'];
            var smsimages=data['smsimages'];
-           console.log(message);
-           console.log(message['created_at']);
+        //   console.log(message);
+          // console.log(message['created_at']);
             var sms=[
+              '<input type="hidden" name="smsID" value="'+message.id+'">',
               '<div class="chat-message clearfix">',
                  '<img src="'+sender.image+'" alt="" width="32" height="32">',
                   '<div class="chat-message-content clearfix">',
@@ -252,7 +253,7 @@ $('.chat').on('click', '.sendbtn', function(e)
              '<p>'+message.body+'</p>'];
               $.each(smsimages, function(key,value)
                   {
-                    console.log(value['path']);
+                //    console.log(value['path']);
 
 sms.push([
                     '<div class="row">'+'<a href="/storage/images/'+value['path']+'" target="#">'+'<img src="/storage/images/'+value['path']+'">'+'</a>'+'</div>'
@@ -261,7 +262,6 @@ sms.push([
  sms.push([
                     '</div></div><hr>'
                 ]);
- console.log($(this).attr('class'));
 
          var htmlsms = sms.join("\n");
           $('#'+chat['id']+'text').append(htmlsms);
@@ -276,69 +276,58 @@ sms.push([
         return false;
   });//end inserting message
 /*Retrive latest sms*/
-/*setInterval(function(){
-  console.log('test');
-  retriveLatestSms();
-  retriveLatestSms();
-}, 1000);*/
- $('#test').click(function latestsms(){
-   var id=1;
+setInterval(function(){
+  latestsms();
+}, 1000);
+$('#test').click(function(){
+  latestsms();
+});
+ function latestsms(){
+   var proID = $("#proid").val();
+    // console.log(proID);
      $.ajax({
-      url   :'/latestsms/'+id,
-      type  : 'get',
-      data  :
-            {
-              "_token": $( this ).find( 'input[name=_token]' ).val(),
-            },
-       xhr  : function()
-            {
-            var myXhr = $.ajaxSettings.xhr();
-            return myXhr;
-            },
+      url   :'/latestsms/'+proID,
+      type  : 'POST',
+      data  :{
+        '_token': '{{csrf_token()}}',
+        'productID': proID
+      },
       success:function(data){
         var chats = data.chats;
-        $.each(chats, function(chatkey,chat){
-
-          var lastdate =   $('#'+chat.id+'text').children('.chat-message:last-child').find('chat-time').innerHTML;
-          console.log(lastdate);
-          $.each(chat.messages, function(smsKey,message)
+        $.each(chats, function(key,chat){
+      var lastsmsID =   $('#'+chat.id+'text').find($('input[name=smsID]')).last().val();
+        //  console.log(lastsmsID);
+          $.each(chat.messages, function(key,message)
           {
-            console.log(totSms);
-            console.log("last three sms :"+totSms-smsKey);
-            if((totSms-smsKey)<=10 && (totSms-smsKey)>0)
-            {
-              console.log(message.body);
-             var html =
-              [
+            if(message.id>lastsmsID){
+              var x = document.getElementById("smssound");
+                 x.play();
+              var sms=[
+                '<input type="hidden" name="smsID" value="'+message.id+'">',
                 '<div class="chat-message clearfix">',
-                  '<img src="{{$message->sender->image}}" alt="" width="32" height="32">',
-
-                 ' <div class="chat-message-content clearfix" >',
-                    '<span class="chat-time">'+message.created_at+'</span>',
-                    '<h5>'+message.sender.name+'</h5>',
-                    '<p>'+message.body+'</p>',
-                  ];
-                    $.each(message.smsimages,function(key,img)
+                   '<img src="'+message.sender.image+'" alt="" width="32" height="32">',
+                    '<div class="chat-message-content clearfix">',
+              '<span class="chat-time">'+message.created_at+'</span>',
+              '<h5>'+message.sender.name+'</h5>',
+               '<p>'+message.body+'</p>'];
+                $.each(message.smsimages, function(key,value)
                     {
-                      html.push([
-                        ' <div class="row">',
-                           '<a href="/storage/images/'+img.path+'" target="#">',
-                            '<img src="/storage/images/'+img.path+'"/>',
-                        '   </a>',
-                        ' </div>',
-                              ]);
+                    //  console.log(value['path']);
 
+  sms.push([
+                      '<div class="row">'+'<a href="/storage/images/'+value['path']+'" target="#">'+'<img src="/storage/images/'+value['path']+'">'+'</a>'+'</div>'
+                        ]);
                     });
-                    html.push([
-                      '</div>',
-                    '</div>',
-                     '<hr>'
-                    ]);
-                     var htmlsms = html.join("\n");
-                      $('#'+chat.id+'text').append(htmlsms);
-            }else{
- console.log(totSms-smsKey);
+   sms.push([
+                      '</div></div><hr>'
+                  ]);
+  // console.log($(this).attr('class'));
+
+           var htmlsms = sms.join("\n");
+              $('#'+chat.id+'text').append(htmlsms);
+
             }
+
         });
         });
       },
@@ -346,6 +335,6 @@ sms.push([
               contentType: false,
               processData: false
      });
-});
+};
 
 });

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<input id="pID" type="hidden" name="pID" value="{{$product->id}}" >
 <div class="container">
   <div style="width: 70% ; margin:10px auto">
 <div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -25,7 +26,7 @@
       <img src="/storage/images/{{$media->path}}" alt="" style="width: 100%; max-height: 500px">
     </div>
     </div>
-  </div>    
+  </div>
     @else
       <div class="item">
         <div style="width: 100% ; height:500px;background:#333;overflow: hidden;margin: auto">
@@ -66,13 +67,15 @@
       </div>
   </div>
   <div class="col col-md-6">
+    @if($product->user_id!=Auth::user()->id)
     <form id="newchatForm" action="/newchat" method="post">
             {{csrf_field()}}
-            <input type="hidden"  id='proid' name="productID" value="{{$product->id}}">
+            <input type="hidden"  id="proid" name="productID" value="{{$product->id}}">
              <button class="btn btn-primary" id="newchatbtn">Message siller</button>
     </form>
-    
+
     <button class="btn btn-secondary">Report this item</button>
+      @endif
   </div>
 </div>
  <!--chat Box-->
@@ -81,22 +84,21 @@
 @if($chats)
   @foreach($chats as $chat)
   <div id="live-chat">
-    
-    <header class="clearfix">
-      
-      <a href="#" class="chat-close">x</a>
 
-      <h4>{{$product->user->name}}</h4>
+    <header class="clearfix">
+
+      <a href="#" class="chat-close">x</a>
+      <h4>{{$chat->users()->where('users.id','!=',Auth::user()->id)->first()->name}}</h4>
 
       <span class="chat-message-counter">3</span>
     </header>
     <div class="chat">
       <div class="chat-history" id="{{$chat->id}}text">
         @foreach($chat->messages()->get() as $message )
-        <div class="chat-message clearfix">      
+        <input type="hidden" name="smsID" value="{{$message->id}}">
+        <div class="chat-message clearfix">
           <img src="{{$message->sender->image}}" alt="" width="32" height="32">
-
-          <div class="chat-message-content clearfix" >         
+          <div class="chat-message-content clearfix" >
             <span class="chat-time">{{$message->created_at}}</span>
             <h5>{{$message->sender->name}}</h5>
             <p>{{$message->body}}</p>
@@ -126,7 +128,7 @@
       </div>
          <button class="sendbtn"><i class="fa fa-plane"></i></button>
       </form>
-      
+
       <button class="btn btn-secondary postimg" >
          <i class="fa fa-photo" ></i>
       </button>
@@ -137,8 +139,8 @@
   </div>
 </div>
 </div>
-<button id="test">Get latest sms </button>
-<script type="text/javascript">
- 
-</script>
+</form>
+<audio id="smssound">
+  <source src="/storage/smsincome.mp3" type="audio/mpeg">
+</audio>
 @endsection

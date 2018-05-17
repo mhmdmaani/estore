@@ -56,7 +56,7 @@ class ProductsController extends Controller
         //
 
         $name           = $request->input('name');
-        $description    = $request->input('descrption');
+        $description    = $request->input('description');
         $price          = $request->input('price');
         $currency       = $request->input('currency');
         $place          = $request->input('local');
@@ -73,18 +73,22 @@ class ProductsController extends Controller
         $product->curr_id = $currency;
         $product->place_id= $place;
         $product->user_id = $user->id;
+        $product->is_active =0;
+        $product->is_sold =0;
+
+
         $product->save();
         foreach (explode(",", $tags) as $tg)
         {
           if(Tag::Where('name',$tg)->count()>0){
-              $tag = Tag::Where('name',$tg)->First(); 
-               $tag->products()->save($product); 
+              $tag = Tag::Where('name',$tg)->First();
+               $tag->products()->save($product);
             }else{
             $tag = new Tag();
             $tag->name = $tg;
             $tag->save();
              $tag->products()->save($product);
-            }  
+            }
            $tag->save();
         }
         if(!empty($images)){
@@ -183,14 +187,14 @@ class ProductsController extends Controller
         foreach (explode(",", $tags) as $tg)
         {
           if(Tag::Where('name',$tg)->count()>0){
-              $tag = Tag::Where('name',$tg)->First(); 
-               $tag->products()->save($product); 
+              $tag = Tag::Where('name',$tg)->First();
+               $tag->products()->save($product);
             }else{
             $tag = new Tag();
             $tag->name = $tg;
             $tag->save();
              $tag->products()->save($product);
-            }  
+            }
            $tag->save();
         }
         if(!empty($images)){

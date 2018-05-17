@@ -153,10 +153,10 @@ class MessagesController extends Controller
       }
        return response()->json($chat);
     }
-    public function latestsms(Request $request)
+    public function latestsms($id)
     {
-      $productID    = $request->id;
-      $chats        =Product::find($productID)->chats()->with('messages')->get();
+      $productID    = $id;
+      $chats        =Product::Find($productID)->chats()->get();
        return response(['chats'=>$chats]);
      }
 }
