@@ -20,7 +20,7 @@
         </div>
     </form>
     <div style="background:#f0f0f0; border-radius: 5px ; border: 1px solid #e50326; padding: 10px ">
-    <form method="post" action="/products/xsearch" class="form-inline">
+    <form method="post" action="/products/xsearch" class="form-inline" style="margin:10px">
     {!!csrf_field()!!}
     <label>Category</label>
     <select class="form-control"
@@ -54,12 +54,12 @@
         </option>
      @endforeach
     </select>
-    <input type="submit" value="Search" class="btn btn-primary">
+    <input type="submit" value="Search" class="btn btn-success" >
 </form>
   <div class="panel panel-primary">
                         <div class="panel-heading">
                            Products 
-                           <a href="{{ route('products.create')}}" class="btn btn-success pull-right btnaddpro" >
+                           <a href="{{ route('products.create')}}" class="btn btn-success pull-right btnaddpro"  >
                                <i class="fa fa-plus"></i>
                            </a>
                         </div>
@@ -132,10 +132,7 @@
                             </div>
                             <!-- /.table-responsive -->
                         </div>
-
-                        </div>
-                        <div class="panel-footer">
-                        </div>
+                      </div>
                     </div>
 </div>
 @endsection

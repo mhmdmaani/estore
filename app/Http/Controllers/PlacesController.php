@@ -91,9 +91,9 @@ class PlacesController extends Controller
         $place->name          = $request->input('name');
             $save = $place->save();
             if($save){
-                return redirect()->route('places.index')->with('success','Place is added successfully!!!'); 
+                return redirect()->route('places.index')->with('success','Place is added successfully!!!');
             }
-             return redirect()->route('places.index')->with('errors','Place  didnt updated!!!'); 
+             return redirect()->route('places.index')->with('errors','Place  didnt updated!!!');
     }
 
     /**
@@ -104,8 +104,8 @@ class PlacesController extends Controller
      */
     public function destroy(Place $place)
     {
-        //   
+        //
            $place->Delete();
-              return redirect()->route('places.index')->with('success','Place is removed successfully!!!'); 
+              return redirect()->route('places.index')->with('success','Place is removed successfully!!!');
     }
 }

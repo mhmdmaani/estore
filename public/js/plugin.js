@@ -131,102 +131,114 @@ $('.postimg').click(function()
   create new chat
   */
   /*end*/
-    $( '#newchatForm').on( 'submit', function() {
+  $.ajaxSetup({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+              });
+    $( '#newchatbtn').on( 'click', function(e){
 
+      e.preventDefault();
+      var token =$('meta[name="csrf-token"]').attr('content');
+      var formData = new FormData($(this).parents('form')[0]);
+      $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+        });
+      $.ajax({
+         url   : '/newchat',
+         type  : 'POST',
+         xhr   : function()
+             {
+             var myXhr = $.ajaxSettings.xhr();
+             return myXhr;
+             },
+         success: function (data) {
+           var chat = data['chat'];
+           var sender = data['sender'];
+           var product = data['product'];
+            if(chat==null){
+                  $('.chat').slideToggle(300, 'swing');
+                  $('.chat-message-counter').fadeToggle(300, 'swing');
+                  console.log('chat=null')
+            }else{
+                console.log('chat!=null')
+                var messages = chat['messages'];
+
+                 var chhtml = [
+                             '<div id="live-chat">',
+                                 '<header class="clearfix">',
+                                       '<a href="#" class="chat-close">x</a>',
+                                   '<h4>'+sender.name+'</h4>',
+                                   '<span class="chat-message-counter">3</span>',
+                                 '</header>',
+                                 '<div class="chat" id="'+chat.id+'">',
+                                   '<div class="chat-history">'
+                               ];
+           $.each(chat.messages,function(key,value ){
+                 chhtml.push([
+                             '<div class="chat-message clearfix">',
+                             '<img src="'+value.sender.image+'" alt="" width="32" height="32">',
+                             '<div class="chat-message-content clearfix">',
+                               '<span class="chat-time">'+value.created_at+'</span>',
+                               '<h5>'+value.sender.name+'</h5>',
+                               '<p>'+value.body+'</p>',
+                            ]);
+           $.each(value.smsimages,function(key,img){
+                 chhtml.push([
+                             '<div class="smsImageCont">',
+                                 '<img src="/storage/images/"'+img.path+'>',
+                              '</div>'
+                           ]);
+           });
+
+           chhtml.push([
+              '</div>',
+                   '</div>',
+                    '<hr>',
+                 '</div>',
+               '</div>',
+             '</div>',
+             ]);
+           });
+           $chathtml = chhtml.join("\n");
+           $("#chatsCont").append($chathtml);
+            $sendform = $('#sendtemplate').find('form');
+            console.log($sendform.attr('action'));
+           $sendform.children('input[name=chatID]').val(chat.id);
+           $sendform.children('input[name=senderID]').val(sender.id);
+           $sendform.children('input[name=id]').val(product.id);
+        $('#'+chat.id).append($sendform);
+        $imagebtn = $('#sendtemplate').find('.postimg');
+          $('#'+chat.id).append($imagebtn);
+           }
+    },
+    data       : formData,
+    cache      : false,
+    contentType: false,
+    processData: false
+  });
+});
         //.....
         //show some spinner etc to indicate operation in progress
         //.....
 
-        $.post(
-            $( this ).prop( 'action' ),
-            {
-                "_token": $( this ).find( 'input[name=_token]' ).val(),
-                "productID": $('#proid').val()
-            },
-            function( data ) {
-              //
-              //When success do
-              //
-              var chat = data['chat'];
-
-               if(chat==null){
-                     $('.chat').slideToggle(300, 'swing');
-                     $('.chat-message-counter').fadeToggle(300, 'swing');
-               }else{
-                var messages = chat['messages'];
-                    var html = [
-                                '<div id="live-chat">',
-                                    '<header class="clearfix">',
-                                          '<a href="#" class="chat-close">x</a>',
-                                      '<h4>{{$product->user->name}}</h4>',
-                                      '<span class="chat-message-counter">3</span>',
-                                    '</header>',
-                                    '<div class="chat">',
-                                      '<div class="chat-history">'
-                                  ];
-        $.each(chat.messages,function(key,value ){
-                    html.push([
-                                '<div class="chat-message clearfix">',
-                                '<img src="'+value.sender.image+'" alt="" width="32" height="32">',
-                                '<div class="chat-message-content clearfix">',
-                                  '<span class="chat-time">'+value.created_at+'</span>',
-                                  '<h5>'+value.sender.name+'</h5>',
-                                  '<p>'+value.body+'</p>',
-                               ]);
-          $.each(value.smsimages,function(key,img){
-                    html.push([
-                                '<div class="smsImageCont">',
-                                    '<img src="/storage/images/"'+img.path+'>',
-                                 '</div>'
-                              ]);
-          });
-
-        html.push([
-                 '</div>',
-                      '</div>',
-                       '<hr>',
-                    '</div>'
-                ]);
- });
-
-        html.push([
-         '<form action="#" method="post" class="sendmessage">',
-                  '<fieldset>',
-                    '<input type="text" placeholder="Type your message…" autofocus>',
-                    '<input type="hidden" name="chatID" value="'+chat.id+'">',
-                  '</fieldset>',
-                '</form>',
-              '</div>',
-            '</div>',
-                    ]);
-          var chathtml = html.join("\n");
-          $('#chatsCont').append(chathtml);
-      }
-            },
-            'json'
-        );
-
-        //.....
-        //do anything else you might want to do
-        //.....
-
-        //prevent the form from actually submitting in browser
-        return false;
-    });
 $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
             });
-$('.chat').on('click', '.sendbtn', function(e)
+$('.sendbtn').click(function(e)
     {
+       e.preventDefault();
       $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
             });
       var proID = $('#proid').val();
-     e.preventDefault();
+
      var formData = new FormData($(this).parents('form')[0]);
      $.ajax({
         url   : '/addmessage/'+proID,
@@ -264,9 +276,9 @@ sms.push([
                 ]);
 
          var htmlsms = sms.join("\n");
-          $('#'+chat['id']+'text').append(htmlsms);
-          $('#'+chat['id']+'text').parents('.chat').find('.postreview').empty();
-          $('#'+chat['id']+'text').parents('.chat').find('input[name=smsBody]').val('');
+          $('#'+chat.id).find('.chat-history').append(htmlsms);
+          $('#'+chat.id).find('.postreview').empty();
+          $('#'+chat.id).find('input[name=smsBody]').val('');
               },
               data       : formData,
               cache      : false,
@@ -276,65 +288,72 @@ sms.push([
         return false;
   });//end inserting message
 /*Retrive latest sms*/
-setInterval(function(){
-  latestsms();
-}, 1000);
-$('#test').click(function(){
-  latestsms();
+
+/*End retrive sms*/
+/*start edit user image*/
+$('.userImgCont img').click(function(){
+  console.log('hej this is image');
+  $('#fileInput').trigger('click');
 });
- function latestsms(){
-   var proID = $("#proid").val();
-    // console.log(proID);
-     $.ajax({
-      url   :'/latestsms/'+proID,
-      type  : 'POST',
-      data  :{
-        '_token': '{{csrf_token()}}',
-        'productID': proID
-      },
-      success:function(data){
-        var chats = data.chats;
-        $.each(chats, function(key,chat){
-      var lastsmsID =   $('#'+chat.id+'text').find($('input[name=smsID]')).last().val();
-        //  console.log(lastsmsID);
-          $.each(chat.messages, function(key,message)
-          {
-            if(message.id>lastsmsID){
-              var x = document.getElementById("smssound");
-                 x.play();
-              var sms=[
-                '<input type="hidden" name="smsID" value="'+message.id+'">',
-                '<div class="chat-message clearfix">',
-                   '<img src="'+message.sender.image+'" alt="" width="32" height="32">',
-                    '<div class="chat-message-content clearfix">',
-              '<span class="chat-time">'+message.created_at+'</span>',
-              '<h5>'+message.sender.name+'</h5>',
-               '<p>'+message.body+'</p>'];
-                $.each(message.smsimages, function(key,value)
-                    {
-                    //  console.log(value['path']);
-
-  sms.push([
-                      '<div class="row">'+'<a href="/storage/images/'+value['path']+'" target="#">'+'<img src="/storage/images/'+value['path']+'">'+'</a>'+'</div>'
-                        ]);
-                    });
-   sms.push([
-                      '</div></div><hr>'
-                  ]);
-  // console.log($(this).attr('class'));
-
-           var htmlsms = sms.join("\n");
-              $('#'+chat.id+'text').append(htmlsms);
-
-            }
-
-        });
-        });
-      },
-              cache      : false,
-              contentType: false,
-              processData: false
-     });
+$('#fileInput').change(function(){
+    $div = $('.userImgCont');
+    changeImg(this ,$div);
+    });
+/*change image*/
+function changeImg(input , $container)
+{
+if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      $img =("#userImg");
+      console.log($img);
+      $('#userImg').attr('src', e.target.result);
+    };
+    reader.readAsDataURL(input.files[0]);
 };
+};
+$('.addFav').click(function(e){
+  e.preventDefault();
+  var proID = $(this).prev().val();
+  console.log(proID);
+  var formData = new FormData($(this).parents('form')[0]);
+  $.ajax({
+     url   : '/addtowish/'+proID,
+     type  : 'POST',
+     xhr   : function()
+         {
+         var myXhr = $.ajaxSettings.xhr();
+         return myXhr;
+         },
+     success: function (data) {
+       if(data['state']=="add"){
+         $inpt  = $('input[value='+proID+']');
+         $inpt.next().children('.fa-star').attr('class','fa fa-check');
+          $inpt.next().children('.btntxt').text('saved');
+       }else{
+         $inpt  = $('input[value='+proID+']');
+         $inpt.next().children('.fa-check').attr('class','fa fa-star');
+          $inpt.next().children('.btntxt').text('add to favorite');
+       }
+    }
+  });
+  });
+/* Call siller*/
+$("#callSiller").click(function(){
+  $('.telCont').fadeIn(500);
+   $('.overlay').fadeIn(500);
+});
+$("#mailSeller").click(function(){
+  $('.mailCont').fadeIn(500);
+   $('.overlay').fadeIn(500);
+});
+$("#mailClose").click(function(){
+  $('.mailCont').fadeOut(500);
+   $('.overlay').fadeOut(500);
+});
+$("#telClose").click(function(){
+  $('.telCont').fadeOut(500);
+   $('.overlay').fadeOut(500);
+});
 
 });

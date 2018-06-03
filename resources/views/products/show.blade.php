@@ -75,6 +75,8 @@
     </form>
 
     <button class="btn btn-secondary">Report this item</button>
+    <button class="btn btn-primary" id="newchatbtn">Message siller</button>
+    
       @endif
   </div>
 </div>
@@ -143,4 +145,6 @@
 <audio id="smssound">
   <source src="/storage/smsincome.mp3" type="audio/mpeg">
 </audio>
+<script src="/js/jquery-3.1.1.min.js"></script>
+<script src="{{ asset('js/products.js') }}"></script>
 @endsection

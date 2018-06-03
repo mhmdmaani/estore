@@ -28,4 +28,10 @@ class Product extends Model
      public function chats(){
       return $this->hasMany('App\Chat');
     }
+    public function favusers(){
+      return $this->belongsToMany('App\User','product_user','product_id','user_id');
+  }
+  public function isfav($user) {
+    return $this->favusers->contains('user_id',$user->id);
+}
 }

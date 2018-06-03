@@ -8,7 +8,7 @@
                 <div class="panel-heading">Register</div>
 
                 <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="{{ route('register') }}">
+                    <form class="form-horizontal" method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
@@ -67,6 +67,12 @@
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                             </div>
                         </div>
+                        <div class="hidden">
+                                <input type="file" id="fileInput" name="image" >
+                                    </div>
+                                   <div class="form-group text-center userImgCont">
+                                   <img id="userImg" src="/storage/images/defaultuser.png" style="width:200px; height:200px">
+                                   </div>
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">

@@ -60,7 +60,7 @@ class CategoriesController extends Controller
         //
              $Category = Category::find($id);
         //$posts = $pro->posts()->orderBy('created_at','desc')->paginate(10);
-           return view('categories.show',['Category'=>$Category]);
+           return view('categories.show',['category'=>$Category]);
     }
 
     /**
@@ -74,7 +74,7 @@ class CategoriesController extends Controller
         //
             $id = $Category->id;
              $selected = Category::Find($id);
-        return view('categories.edit',['Category'=>$selected]);
+        return view('categories.edit',['category'=>$selected]);
     }
 
     /**
@@ -91,9 +91,9 @@ class CategoriesController extends Controller
         $Category->name          = $request->input('name');
             $save = $Category->save();
             if($save){
-                return redirect()->route('categories.index')->with('success','Category is added successfully!!!'); 
+                return redirect()->route('categories.index')->with('success','Category is added successfully!!!');
             }
-             return redirect()->route('categories.index')->with('errors','Category  didnt updated!!!'); 
+             return redirect()->route('categories.index')->with('errors','Category  didnt updated!!!');
     }
 
     /**
@@ -105,8 +105,8 @@ class CategoriesController extends Controller
     public function destroy(Category $Category)
     {
         //
-         
+
            $Category->Delete();
-              return redirect()->route('categories.index')->with('success','Category is removed successfully!!!'); 
+              return redirect()->route('categories.index')->with('success','Category is removed successfully!!!');
     }
 }

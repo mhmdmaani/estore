@@ -62,11 +62,19 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $img = 'defaultuser.png';
+        if($data['image']!=null){
+                $value =$data['image'];
+                $imgName          = md5(time().uniqid()).'.'.$value->getClientOriginalExtension();
+                $value->storeAs('public/images',$imgName);
+                $img =$imgName;
+        }
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'tel'=>$data['tel'],
             'password' => bcrypt($data['password']),
+            'image'   =>$img,
         ]);
     }
 }

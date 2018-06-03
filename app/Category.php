@@ -10,4 +10,7 @@ class Category extends Model
     public function products(){
       return $this->hasMany('App\Product','category_id');
     }
+    public function users(){
+      return $this->belongsToMany('App\User','category_user','category_id','user_id');
+    }
 }

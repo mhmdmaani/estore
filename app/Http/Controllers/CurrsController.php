@@ -91,9 +91,9 @@ class CurrsController extends Controller
         $curr->name          = $request->input('name');
             $save = $curr->save();
             if($save){
-                return redirect()->route('currs.index')->with('success','curr is added successfully!!!'); 
+                return redirect()->route('currs.index')->with('success','curr is added successfully!!!');
             }
-             return redirect()->route('currs.index')->with('errors','curr  didnt updated!!!'); 
+             return redirect()->route('currs.index')->with('errors','curr  didnt updated!!!');
     }
 
     /**
@@ -107,6 +107,6 @@ class CurrsController extends Controller
         //
          
            $curr->Delete();
-              return redirect()->route('currs.index')->with('success','curr is removed successfully!!!'); 
+              return redirect()->route('currs.index')->with('success','curr is removed successfully!!!');
     }
 }

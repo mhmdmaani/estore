@@ -1,8 +1,9 @@
 @extends('layouts.app')
 @section('content')
+<div class="container">
 <div class="panel panel-primary" style="margin:10 auto">
                         <div class="panel-heading">
-                           categories 
+                           categories
                            <a href="{{ route('categories.create')}}" class="btn btn-success pull-right btnaddpro" >
                                <i class="fa fa-plus"></i>
                            </a>
@@ -31,21 +32,21 @@
                                              </a>
                                              <a href="categories/{{$category->id}}/edit">
                                                 <button class="btn btn-success">Edit</button>
-                                             </a>                                      
+                                             </a>
                                              <button class="btn btn-danger"onclick="
                                              var result = confirm('Do you sure to delete this Currency??');
                                              if(result){
                                                  document.getElementById('deleteForm').submit();
                                              }
-                                                      
-                                             " >Delete</button> 
+
+                                             " >Delete</button>
                                           <form method="POST" id="deleteForm" action="{{ route('categories.destroy',[$category->id]) }}">
                                                     <input type=hidden name="_method" value="delete">
                                                     {!!csrf_field()!!}
                                          </form>
                                             </td>
                                         </tr>
-                                       
+
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -56,4 +57,5 @@
                         <div class="panel-footer">
                         </div>
                     </div>
+                  </div>
 @endsection

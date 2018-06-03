@@ -283,4 +283,9 @@ class ProductsController extends Controller
       $product->save();
       return redirect()->back();
     }
+    public function prochats($id){
+        $product = Product::Find($id);
+        $chats = $product->chats()->orderBy('id','desc');
+        return view('chats.prochats',['chats'=>$chats]);
+    }
 }

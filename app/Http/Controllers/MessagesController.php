@@ -149,9 +149,10 @@ class MessagesController extends Controller
       $chat                  ->save();
       $product->chats()      ->save($chat);
       $sender->chats()       ->save($chat);
+      $product->user->chats()->save($chat);
       $chat                  = $chat;
       }
-       return response()->json($chat);
+       return response()->json(['chat'=>$chat,'sender'=>$sender,'product'=>$product]);
     }
     public function latestsms($id)
     {

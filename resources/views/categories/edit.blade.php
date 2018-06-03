@@ -2,8 +2,8 @@
 @section('content')
 <div class="panel panel-primary" style="margin:10 auto" width="70%">
   <div class="panel-heading"> New Category </div>
-       <div class="panel-body">               
-<form method="post" action="{{ route('currs.update',[$category->id]) }}">
+       <div class="panel-body">
+<form method="post" action="{{ route('categories.update',[$category->id]) }}">
  {!!csrf_field()!!}
  <input type="hidden" name="_method" value="put">
  <input type="hidden" name="id" value="{{$category->id}}">
