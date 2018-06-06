@@ -57,7 +57,15 @@ Route::get('/tag/{id}' ,'HomeController@gettag');
 Route::post('/sendreport','ReportsController@store');
 Route::get('/sendreport','ReportsController@store');
 /* end send report ajax*/
-
+Route::get('/editpro/{id}','HomeController@editpro');
+/*marksold ajax*/
+Route::post('/marksold','HomeController@marksold');
+Route::get('/marksold','HomeController@marksold');
+/*end mark sold ajax*/
+/*mark not sold ajax*/
+Route::post('/marknotsold','HomeController@marknotsold');
+Route::get('/marknotsold','HomeController@marknotsold');
+/*end mark not sold ajax*/
 /*send Email ajax*/
 Route::get('/sendmail',function(Illuminate\Http\Request $request,Illuminate\Mail\Mailer $mailer){
   $mailer->to($request->input('to'))

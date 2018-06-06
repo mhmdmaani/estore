@@ -442,9 +442,9 @@ function latestsms(){
      },
      success:function(data){
        var chats = data.chats;
+
        $.each(chats, function(key,chat){
      var lastsmsID =   $('#'+chat.id+'text').find($('input[name=smsID]')).last().val();
-       //  console.log(lastsmsID);
          $.each(chat.messages, function(key,message)
          {
            if(message.id>lastsmsID){
@@ -484,4 +484,64 @@ function latestsms(){
              processData: false
     });
 };
+/*mark as sold*/
+$('#marksold').click(function(e){
+  e.preventDefault();
+  var formData = new FormData($(this).parents('form')[0]);
+  $.ajax({
+     url   : '/marksold',
+     type  : 'POST',
+     xhr   : function()
+         {
+         var myXhr = $.ajaxSettings.xhr();
+         return myXhr;
+         },
+     success: function (data) {
+      $issold = data['issold'];
+      if($issold==1){
+         $('#marksold').text('mark as for selling');
+         $('.proInfo').find('.alert').removeClass('alert-success').addClass('alert-danger');
+         $('.proInfo').find('.alert').text('Sold');
+         $('#marksold').attr('id','marknotsold');
+      }else{
+
+      }
+    },
+    data       : formData,
+    cache      : false,
+    contentType: false,
+    processData: false
+  });
+  });
+/*end mark as sold*/
+/*mark as not sold*/
+$('#marknotsold').click(function(e){
+  e.preventDefault();
+  var formData = new FormData($(this).parents('form')[0]);
+  $.ajax({
+     url   : '/marknotsold',
+     type  : 'POST',
+     xhr   : function()
+         {
+         var myXhr = $.ajaxSettings.xhr();
+         return myXhr;
+         },
+     success: function (data) {
+      $issold = data['issold'];
+      if($issold==0){
+         $('#marknotsold').text('markas sold');
+         $('.proInfo').find('.alert').removeClass('alert-danger').addClass('alert-success');
+         $('.proInfo').find('.alert').text('Available');
+         $('#marknotsold').attr('id','marksold');
+      }else{
+
+      }
+    },
+    data       : formData,
+    cache      : false,
+    contentType: false,
+    processData: false
+  });
+  });
+/*mark as not sold*/
 });

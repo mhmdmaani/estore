@@ -53,7 +53,10 @@
     <div class="col col-md-6">
       <div class="proInfo">
         @if($product->is_sold==1)
-                <div class="alert alert-danger"> Sold</div>
+                <div class="alert alert-danger text-center"> Sold</div>
+        @else
+        <div class="alert alert-success text-center"> Available</div>
+
         @endif
             <p class="price"><span>{{$product->price}}</span>  {{$product->curr->name}}</p>
             <h5>City:   <span>{{$product->place->name}}</span></h5>
@@ -78,13 +81,40 @@
                  <button class="btn btn-primary" id="newchatbtn"> <i class="fa fa-comments"></i>  chat Siller</button>
 
         </form>
-          <button id="reportbtn" class="btn btn-primary"><i class="fa fa-bug"></i>  Report this item</button>
+        <button id="reportbtn" class="btn btn-primary"><i class="fa fa-bug"></i>  Report this item</button>
         <button class="btn btn-primary" id="callSiller" ><i class="fa fa-phone"></i>  call siller </button>
-         <button class="btn btn-primary" id="mailSeller"> <i class="fa fa-envelope-o"></i>  mail siller </button>
+        <button class="btn btn-primary" id="mailSeller"> <i class="fa fa-envelope-o"></i>  mail siller </button>
   </div>
       @else
       <div class="btnsCont">
         <!--edit and mark as sold by owner-->
+        <button class="btn btn-danger" onclick="
+        var result = confirm('Do you sure to delete this item ??');
+        if(result){
+            document.getElementById('delete{{$product->id}}').submit();
+        }
+
+        " >Delete</button>
+        <form method="POST" style="width:100%" id="delete{{$product->id}}" action="{{ route('products.destroy',[$product->id]) }}">
+                  <input type=hidden name="_method" value="delete">
+                  {!!csrf_field()!!}
+       </form>
+        <a id="Editpro" href="/editpro/{{$product->id}}" class="btn btn-primary"  ><i class="fa fa-edit"></i>  Edit item </a>
+        <div id="sold">
+       @if($product->is_sold==0)
+        <form class="" action="" method="post">
+        {!!csrf_field()!!}
+        <input type="hidden" name="productID" value="{{$product->id}}">
+        <button class="btn btn-primary" id="marksold"> <i class="fa fa-envelope-o"></i> Mark as sold </button>
+        </form>
+        @else
+        <form class="" action="" method="post">
+        {!!csrf_field()!!}
+        <input type="hidden" name="productID" value="{{$product->id}}">
+        <button class="btn btn-primary" id="marknotsold"> <i class="fa fa-envelope-o"></i> Mark as for selling </button>
+        </form>
+        @endif
+      </div>
     </div>
 
       @endif

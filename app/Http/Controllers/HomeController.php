@@ -129,6 +129,24 @@ public function gettag(Request $request){
   return view('tag',['categories'=>$categories, 'tags'=>$tags,'products'=>$products ,'currs'=>$currs,'places'=>$places]);
 
 }
-
+public function editpro(Request $request){
+  $product = Product::Find($request->id);
+    $categories = Category::All();
+   $currs = Curr::All();
+   $places = Place::All();
+   return view('products.edit',['product'=>$product,'categories'=>$categories,'currs'=>$currs,'places'=>$places]);
+}
+public function marksold(Request $request){
+  $product = Product::Find($request->input('productID'));
+  $product->is_sold = 1;
+  $product->save();
+  return response()->json(['issold'=>$product->is_sold]);
+}
+public function marknotsold(Request $request){
+  $product = Product::Find($request->input('productID'));
+  $product->is_sold = 0;
+  $product->save();
+  return response()->json(['issold'=>$product->is_sold]);
+}
 
 }

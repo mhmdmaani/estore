@@ -209,7 +209,7 @@ class ProductsController extends Controller
        }
 
     }
-         return redirect()->action('ProductsController@index')
+         return redirect()->back()
          ->with('success','Product updated successfully');
     }
 
@@ -222,7 +222,9 @@ class ProductsController extends Controller
     public function destroy($id)
     {
         //
-        return redirect()->back();
+        $product = Product::Find($id);
+        $product->delete();
+        return redirect()->action('HomeController@index')->with('success','item deleted successfully');
     }
       public function searchbyid(Request $request){
         $id = $request->input('productID');
