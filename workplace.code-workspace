@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "app\\Http\\Controllers"
+		},
+		{
+			"path": "resources\\views"
+		},
+		{
+			"path": "public"
+		},
+		{
+			"path": "app"
+		},
+		{
+			"path": "routes"
+		}
+	]
+}

@@ -135,7 +135,7 @@
                 <div class="brands-name">
                   <ul class="nav nav-pills nav-stacked">
                     @foreach($tags as $tag)
-                    <li><a href="#"> <span class="pull-right">({{$tag->products()->get()->count()}})</span>{{$tag->name}}</a></li>
+                    <li><a href="/tag/{{$tag->id}}"> <span class="pull-right">({{$tag->products()->get()->count()}})</span>{{$tag->name}}</a></li>
                     @endforeach
                   </ul>
                 </div>

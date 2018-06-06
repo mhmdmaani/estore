@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Product;
 use App\Category;
 use App\Tag;
@@ -90,22 +91,44 @@ class HomeController extends Controller
   }
   public function viewProduct(Request $request){
     $product = Product::Find($request->id);
-    $chats = null;
-    if(Auth::user())
-    {
-        $user= Auth::user();
-      $chats =$user->chats()->where('product_id','=',$product->id)->get();
-      if(Auth::user()->id==$product->user->id)
-        {
-            $chats = $product->chats()->get();
-        }
+    $relatedItems = DB::table('products')->join('product_tag','product_tag.product_id','=','products.id')
+                                         ->join('categories','categories.id','=','products.category_id')
+                                         ->join('media','media.product_id','=','products.id')
+                                         ->join('currs','currs.id','=','products.curr_id')
+                                         ->join('places','places.id','=','products.place_id')
+                                         ->where([
+                                           ['products.id','!=',$product->id],
+                                         ['categories.id','=',$product->category_id],
+                                         ['places.id','=',$product->place_id],
+                                         ['products.is_sold','=',0],
+                                         ['products.is_active','=',0]
+                                      ])->orderBy('products.id')
+                                         ->take(10);
      $user = Auth::user();
      $chats =$user->chats()->where('product_id','=',$product->id)->get();
     if(Auth::user()->id==$product->user->id){
-        $chats = $product->chats()->get();
+        $chats = $user->chats()->where('product_id','=',$product->id)->get();
     }
-    return view('product',['product'=>$product,'chats'=>$chats]);
+    return view('product',['product'=>$product,'chats'=>$chats,'relatedItems'=>$relatedItems]);
 }
-  }
+public function getcategory(Request $request){
+  $category = Category::Find($request->id);
+  $tags = Tag::orderBy('id','desc')->get();
+  $products = $category->products()->orderBy('id','desc')->paginate(10);
+  $places = Place::orderBy('id','asc')->get();
+  $currs = Curr::orderBy('id','asc')->get();
+  return view('categry',['category'=>$category, 'tags'=>$tags,'products'=>$products ,'currs'=>$currs,'places'=>$places]);
+
+}
+public function gettag(Request $request){
+  $tags  = Tag::Find($request->id);
+  $categories = Category::orderBy('id','desc')->get();
+  $products = $tags->products()->orderBy('id','desc')->paginate(10);
+  $places = Place::orderBy('id','asc')->get();
+  $currs = Curr::orderBy('id','asc')->get();
+  return view('tag',['categories'=>$categories, 'tags'=>$tags,'products'=>$products ,'currs'=>$currs,'places'=>$places]);
+
+}
+
 
 }

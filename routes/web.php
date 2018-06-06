@@ -46,7 +46,28 @@ Route::post('/addtowish/{id}','HomeController@addproducttosaved');
 Route::get('/addtowish/{id}','HomeController@addproducttosaved');
 Route::post('/removefromwish/{id}','HomeController@deleteproductfromsaved');
 Route::get('/removefromwish/{id}','HomeController@deleteproductfromsaved');
-
+/*public pages*/
 Route::get('/myads','HomeController@myads');
 Route::get('/savedads','HomeController@savedads');
 Route::get('/item/{id}','HomeController@viewProduct');
+Route::get('/category/{id}' ,'HomeController@getcategory');
+Route::get('/tag/{id}' ,'HomeController@gettag');
+/*End public pages*/
+/*send report ajax*/
+Route::post('/sendreport','ReportsController@store');
+Route::get('/sendreport','ReportsController@store');
+/* end send report ajax*/
+
+/*send Email ajax*/
+Route::get('/sendmail',function(Illuminate\Http\Request $request,Illuminate\Mail\Mailer $mailer){
+  $mailer->to($request->input('to'))
+        ->send(new App\Mail\ProMail($request->input('title'),$request->input('sender'),$request->input('body')));
+return response()->json(['state'=>'sent']);
+});
+Route::post('/sendmail',function(Illuminate\Http\Request $request,Illuminate\Mail\Mailer $mailer){
+  $to = $request->input('to');
+  $mailer->to($to)
+        ->send(new App\Mail\ProMail($request->input('title'),$request->input('title'),$request->input('body')));
+return response()->json(['state'=>'sent']);
+});
+/* end send Email ajax*/

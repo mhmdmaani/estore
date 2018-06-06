@@ -235,13 +235,11 @@
                 </div>
                 <div class="col-sm-2">
                     <div class="single-widget">
-                        <h2>Quock Shop</h2>
+                        <h2>popular Categories</h2>
                         <ul class="nav nav-pills nav-stacked">
-                            <li><a href="#">T-Shirt</a></li>
-                            <li><a href="#">Mens</a></li>
-                            <li><a href="#">Womens</a></li>
-                            <li><a href="#">Gift Cards</a></li>
-                            <li><a href="#">Shoes</a></li>
+                          @foreach($footerCat->take(5) as $footCat)
+                            <li><a href="category/{{$footCat->id}}">{{$footCat->name}}</a></li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>

@@ -238,7 +238,6 @@ $('.sendbtn').click(function(e)
         }
             });
       var proID = $('#proid').val();
-
      var formData = new FormData($(this).parents('form')[0]);
      $.ajax({
         url   : '/addmessage/'+proID,
@@ -277,6 +276,7 @@ sms.push([
 
          var htmlsms = sms.join("\n");
           $('#'+chat.id).find('.chat-history').append(htmlsms);
+          $('#'+chat.id).find('.chat-history').animate({ scrollTop:   $('#'+chat.id).find('.chat-history').prop("scrollHeight")}, 1000);
           $('#'+chat.id).find('.postreview').empty();
           $('#'+chat.id).find('input[name=smsBody]').val('');
               },
@@ -347,6 +347,10 @@ $("#mailSeller").click(function(){
   $('.mailCont').fadeIn(500);
    $('.overlay').fadeIn(500);
 });
+$("#reportbtn").click(function(){
+  $('.reportCont').fadeIn(500);
+   $('.overlay').fadeIn(500);
+});
 $("#mailClose").click(function(){
   $('.mailCont').fadeOut(500);
    $('.overlay').fadeOut(500);
@@ -355,5 +359,129 @@ $("#telClose").click(function(){
   $('.telCont').fadeOut(500);
    $('.overlay').fadeOut(500);
 });
+$("#reportclose").click(function(){
+  $('.reportCont').fadeOut(500);
+   $('.overlay').fadeOut(500);
+});
+/*sending report ajax*/
+$('#sendreport').click(function(e){
+  e.preventDefault();
+  var formData = new FormData($(this).parents('form')[0]);
+  $.ajax({
+     url   : '/sendreport',
+     type  : 'POST',
+     xhr   : function()
+         {
+         var myXhr = $.ajaxSettings.xhr();
+         return myXhr;
+         },
+     success: function (data) {
+       $report = data['report'];
+       if($report!=null){
+         $('#success div').append("<div class='alert alert-success' style='font-size:18px'>Thank you we well check this item!!</div>");
+         $('.reportCont').fadeOut(500);
+          $('.overlay').fadeOut(500);
+          $('#success').fadeIn(500);
+       }else{
+         $('#success h3').append("<div class='alert alert-success'>Sorry we can not recive your</div>");
+         $('#success').fadeIn(500)
+       }
+    },
+    data       : formData,
+    cache      : false,
+    contentType: false,
+    processData: false
+  });
+  });
+/*End sending report ajax*/
+/*sending report ajax*/
+$('#sendmail').click(function(e){
+  e.preventDefault();
+  var formData = new FormData($(this).parents('form')[0]);
+  $.ajax({
+     url   : '/sendmail',
+     type  : 'POST',
+     xhr   : function()
+         {
+         var myXhr = $.ajaxSettings.xhr();
+         return myXhr;
+         },
+     success: function (data) {
+       if(data['state'=='sent']){
+    console.log('great');
+       }else{
+         console.log('not good');
+       }
+    },
+    data       : formData,
+    cache      : false,
+    contentType: false,
+    processData: false
+  });
+  });
+  /*check new messages*/
+  setInterval(function(){
+  latestsms();
+}, 1000);
+  /*end check new Messages*/
+/*End sending report ajax*/
+$('#success button').click(function(){
+  $('#success').fadeOut(500);
+});
 
+/*Helper functions*/
+function latestsms(){
+  var proID = $("#proid").val();
+   // console.log(proID);
+    $.ajax({
+     url   :'/latestsms/'+proID,
+     type  : 'POST',
+     data  :{
+       '_token': '{{csrf_token()}}',
+       'productID': proID
+     },
+     success:function(data){
+       var chats = data.chats;
+       $.each(chats, function(key,chat){
+     var lastsmsID =   $('#'+chat.id+'text').find($('input[name=smsID]')).last().val();
+       //  console.log(lastsmsID);
+         $.each(chat.messages, function(key,message)
+         {
+           if(message.id>lastsmsID){
+             var x = document.getElementById("smssound");
+                x.play();
+             var sms=[
+               '<input type="hidden" name="smsID" value="'+message.id+'">',
+               '<div class="chat-message clearfix">',
+                  '<img src="'+message.sender.image+'" alt="" width="32" height="32">',
+                   '<div class="chat-message-content clearfix">',
+             '<span class="chat-time">'+message.created_at+'</span>',
+             '<h5>'+message.sender.name+'</h5>',
+              '<p>'+message.body+'</p>'];
+               $.each(message.smsimages, function(key,value)
+                   {
+                   //  console.log(value['path']);
+
+ sms.push([
+                     '<div class="row">'+'<a href="/storage/images/'+value['path']+'" target="#">'+'<img src="/storage/images/'+value['path']+'">'+'</a>'+'</div>'
+                       ]);
+                   });
+  sms.push([
+                     '</div></div><hr>'
+                 ]);
+ // console.log($(this).attr('class'));
+
+          var htmlsms = sms.join("\n");
+             $('#'+chat.id+'text').append(htmlsms);
+
+           }
+
+       });
+       });
+     },
+             cache      : false,
+             contentType: false,
+             processData: false
+    });
+};
 });

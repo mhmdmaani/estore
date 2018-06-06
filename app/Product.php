@@ -34,4 +34,7 @@ class Product extends Model
   public function isfav($user) {
     return $this->favusers->contains('user_id',$user->id);
 }
+public function reports(){
+  return $this->hasMany('App\Report');
+}
 }
